@@ -1258,8 +1258,9 @@ V.unity=`
  <div class="card" style="padding:10px 0;overflow-x:auto">
   <table class="t" style="min-width:600px"><thead><tr><th style="padding-left:30px">SDK version</th><th style="text-align:right">Q3 revenue</th><th style="text-align:right">Q2 revenue</th><th style="text-align:right">Q3 eCPM</th><th style="text-align:right;padding-right:30px">Q2 eCPM</th></tr></thead><tbody>
   ${U.q3sdk.filter(o=>o.rev>0).map(o=>`<tr><td class="lead2" style="padding-left:30px"><span class="sdk-chip ${/^4\.(1[0-5]|[0-9])\./.test(o.v)?'old':'cur'}">${o.v}</span></td><td class="n">${money(o.rev)}</td><td class="n" style="color:var(--muted)">${o.prev>100?money(o.prev):'new'}</td><td class="n">${usd(o.ecpm)}</td><td class="n" style="color:var(--muted);padding-right:30px">${o.pimp>1000?usd(o.pecpm):'–'}</td></tr>`).join('')}
+  <tr style="background:var(--demandSoft)"><td class="lead2" style="padding-left:30px;font-weight:800">Total Unity Ads</td><td class="n" style="font-weight:800">${money(UQ3.rev)}</td><td class="n" style="font-weight:800">${money(UQ3.prev)}</td><td class="n" style="font-weight:800">${usd(UQ3.ecpm)}</td><td class="n" style="font-weight:800;padding-right:30px">${usd(UQ3.pecpm)}</td></tr>
   </tbody></table>
-  <div class="cap" style="padding:8px 30px 4px">Jul 1 to Sep 30 vs Apr 1 to Jun 30. 4.18.1 brought new volume in July (${M(s4181.imp)} impressions at ${usd(s4181.ecpm)}). The small slice still on 4.10.0 earns a very high eCPM, so it is worth knowing which title it is before it moves. Unity Ads had no July 10 or 15 spike; its daily revenue peaked at ${money(UQ3.maxDay)}.</div>
+  <div class="cap" style="padding:8px 30px 4px">Jul 1 to Sep 30 vs Apr 1 to Jun 30; total is ${pct(uChg,1)} on revenue and ${pct(uEcpmChg,1)} on eCPM, including small versions not listed. 4.18.1 brought new volume in July (${M(s4181.imp)} impressions at ${usd(s4181.ecpm)}). The small slice still on 4.10.0 earns a very high eCPM, so it is worth knowing which title it is before it moves. Unity Ads had no July 10 or 15 spike; its daily revenue peaked at ${money(UQ3.maxDay)}.</div>
  </div>
  ${sec('Next: SDK 4.20.1 everywhere','star','s')}
  <div class="grid g2">
