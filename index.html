@@ -1029,7 +1029,7 @@ V.overview=`
  <div class="grid g2">
   <div class="card" style="padding:12px 30px">${nlist([
    ['Impressions per player recovered.',`Rise of Berk is at ${DASH.ipdRef.rob.sepPt.toFixed(2)} impressions per DAU (${DASH.ipdRef.rob.sepDay}) against ${DASH.ipdRef.rob.mar.toFixed(2)} before the SDK issue (${DASH.ipdRef.rob.marDay}). Across the portfolio, ${DJ.ipd.toFixed(2)} in July to ${DSEP.ipd.toFixed(2)} in September (${pct(ipdUp)}).`],
-   ['Ads load four to five times faster.',`Waterfall latency ${sec1(Q.jul.lat)} in July, ${sec1(Q.sep.lat)} in September, after we changed how network instances load in parallel on rewarded.`],
+   ['Ads load four to five times faster.',`Waterfall latency ${sec1(Q.jul.lat)} in July, ${sec1(Q.sep.lat)} in September. LevelPlay now loads rewarded ads in parallel rather than one at a time (Dynamic Loading, live Sep 3 on SDK 9.0+).`],
    ['Fewer players.',`DAU ${k0(DJ.dau)} in July to ${k0(DSEP.dau)} in September. Jurassic World: The Game ${pct(jwDauDrop)} on both platforms; the other titles moved between ${pct(Math.min(...DASH.titles.filter(t=>t!==dJW).map(t=>t.sep.dau/t.jul.dau-1)))} and ${pct(Math.max(...DASH.titles.filter(t=>t!==dJW).map(t=>t.sep.dau/t.jul.dau-1)))}, which looks like normal back-to-school.`],
    ['Interstitials are live.','Ninja Turtles started an A/B/C test on Sep 22 (no interstitials, safe and aggressive pacing), segmented by country tier.'],
    ['Unity Ads grew faster than the stack.',`${money(DATA.UADS.q3.rev)} in Q3, ${pct(DATA.UADS.q3.rev/DATA.UADS.q3.prev-1)} on Q2, after this year's move from SDK 4.10 and 4.12 to 4.16 and 4.18.`],
@@ -1107,20 +1107,29 @@ V.lp_next=`
  <div class="grid g2">
   <div class="card">
    ${lab('Waterfall latency per week, all titles (impression-weighted)')}
-   ${lines(wkLab,[{name:'Latency',v:fullWk.map(w=>w.lat/1000),c:C.demand,fill:true,w:2.8}],{fmt:v=>v.toFixed(1)+'s',h:230,ticks:3,marker:latIdx,markerLabel:'Late Aug: both Jurassic World titles'})}
-   <div class="cap">We changed how network instances load in parallel on rewarded, balancing speed against yield. Dragons: Rise of Berk and Ninja Turtles went to 100% on Aug 10, Jurassic World: The Game and Alive in late August, and it is now on across LevelPlay.</div>
+   ${lines(wkLab,[{name:'Latency',v:fullWk.map(w=>w.lat/1000),c:C.demand,fill:true,w:2.8}],{fmt:v=>v.toFixed(1)+'s',h:230,ticks:3})}
+   <div class="cap">Dynamic Loading on rewarded video, live across LevelPlay since Sep 3: ads load in parallel rather than one at a time, so they are ready to show sooner. Across LevelPlay, waterfall latency is down roughly 70%. You can follow it in Real Time Pivot.</div>
   </div>
   <div class="card" style="padding:10px 0;overflow-x:auto">
    <table class="t" style="min-width:380px"><thead><tr><th style="padding-left:30px">Title</th><th style="text-align:right">July</th><th style="text-align:right">September</th><th style="text-align:right;padding-right:30px">Change</th></tr></thead><tbody>${latRows}</tbody></table>
-   <div class="cap" style="padding:8px 30px 4px">Average waterfall latency, impression-weighted. Faster loading means fewer players hit "no ad available" on a quest or a speed-up. Revenue moved for many reasons this quarter, so we read this as a player-experience win first.</div>
+   <div class="cap" style="padding:8px 30px 4px">Average waterfall latency (load to load success), impression-weighted. Faster loading means fewer players waiting on an ad for a quest or a speed-up.</div>
   </div>
+ </div>
+ <div class="grid g2" style="margin-top:18px">
+  <div class="card" style="padding:12px 30px">${lab('What changed, and what did not')}${nlist([
+   ['Loading, not the auction.','Auction pricing and floors work exactly as before. What changed is the loading: more than one instance loads at a time instead of waiting for each to resolve in turn.'],
+   ['Nothing to set up.','No code change and no new configuration. It applies on LevelPlay SDK 9.0+, which all your titles run.'],
+   ['Biggest where waterfalls are deep.','The effect is largest on waterfalls with many non-bidding instances and smallest on bidding-only set-ups. We can look at where each of your apps sits.'],
+  ])}</div>
+  <div class="callbox"><h4>What to expect in your reports</h4><p>Impressions can move between instances, and instance-level counts (ad source checks, render rate, win rate, requests) shift with the new loading. That reflects the update, not a problem with your set-up.</p><p style="margin-bottom:0"><b>How to read it:</b> app-level revenue and eCPM over at least a full week. If an app's revenue drops, send us the app and dates and we will review it with the product team.</p></div>
  </div>
  ${sec('Waiting on your side: SDK 9.6.0 and adapter 5.9.0','chip','s')}
  <div class="grid g2">
   <div class="card" style="padding:12px 30px">${nlist([
-   ['Init retry.','If LevelPlay fails to initialize on launch it tries again, so fewer sessions end up with no ads at all. Built for the drop seen after the move from 8.x to 9.x.'],
+   ['Init retry.','If LevelPlay fails to initialize on launch it tries again, so fewer sessions end up with no ads at all.'],
    ['Fixes for impressions, ANRs and ad callbacks.','Collected across the 9.x line; adapter 5.9.0 is the Unity Ads half of the same update.'],
-   ['Platform floor.','9.6.0 needs iOS 15 or newer. We will confirm exactly what players on older devices see before you ship.'],
+   ['Versions and platform floor.','Latest is Android 9.6.0, iOS 9.6.1 and Unity plugin 9.5.1. The update needs iOS 15 or newer; we will confirm what players on older devices see before you ship.'],
+   ['Faster with an AI coding agent.','For Unity-built games, the LevelPlay Unity Integration Skill (beta) guides Claude and other coding agents through the upgrade and the move from the older IronSource APIs to the Ad Unit APIs.'],
   ])}</div>
   <div class="callbox"><h4>Proposal: Jurassic World: The Game first</h4><p>It is ${Math.round(jwShare*100)}% of your ad revenue and the title with the daily "watch an ad" quest, so a failed start is visible to players. Ship 9.6.0 + 5.9.0, then compare impressions per DAU for two weeks before and after.</p><p style="margin-bottom:0"><b>What we need:</b> an engineering slot and a target date. We bring the release notes and watch the rollout with you.</p></div>
  </div>
@@ -1324,7 +1333,7 @@ V.lp_road=`
  ${sec('The roadmap, by timing','chart','s')}
  <div class="roadmap" style="grid-template-columns:repeat(3,1fr)">
   <div class="rq"><h4>Live</h4>
-   ${rItem('Dynamic loading on rewarded video','Network instances load in parallel. The change behind your latency drop from 17s to about 3s.','LIVE','live')}
+   ${rItem('Dynamic Loading on rewarded video','Ads load in parallel rather than one at a time; waterfall latency down roughly 70%. Live Sep 3 on SDK 9.0+, nothing to set up.','LIVE','live')}
    ${rItem('AI-assisted integration','The Unity AI Assistant integrates LevelPlay from package install to a live ad; a public LevelPlay skill for Claude Code too.','LIVE','live')}
    ${rItem('SDK 9.6.0 and refactored adapters','Init retry, single boolean GDPR consent, split impression-level revenue APIs, Swift Package Manager, AdMob Next Gen support.','LIVE','live')}
    ${rItem('Bidding-first demand stack','PubMatic and Voodoo bidding, LINE and YSO ramping; legacy non-bidding instances retiring through 2026.','ROLLING','live')}
