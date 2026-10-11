@@ -1097,7 +1097,8 @@ V.lp_perf=`
 /* ---------- 03 LevelPlay: what changed, what comes next ---------- */
 function rItem(t,why,st,cls){return `<div class="r-item"><div class="r-top"><b>${t}</b><span class="r-st ${cls||''}">${st}</span></div><div class="r-why" style="color:var(--body);font-weight:500">${why}</div></div>`;}
 const latIdx=fullWk.findIndex(w=>w.wk==='2026-08-24');
-const latRows=LIVE.filter(t=>t.jul.imp>0).map(t=>`<tr><td class="lead2" style="padding-left:30px">${gimg(t.icon,20)}${t.name}</td><td class="n" style="color:var(--muted)">${sec1(t.jul.lat)}</td><td class="n" style="font-weight:800">${sec1(t.sep.lat)}</td><td class="n" style="padding-right:30px">${chgCell(t.sep.lat/t.jul.lat-1)}</td></tr>`).join('');
+const latCell=x=>{const c=x<=-0.10?'var(--pos)':x>=0.10?'var(--neg)':'var(--muted)';return `<span style="color:${c};font-weight:700">${x<=-0.10?'▼ ':''}${pct(x)}</span>`;};
+const latRows=LIVE.filter(t=>t.jul.imp>0).map(t=>`<tr><td class="lead2" style="padding-left:30px">${gimg(t.icon,20)}${t.name}</td><td class="n" style="color:var(--muted)">${sec1(t.jul.lat)}</td><td class="n" style="font-weight:800">${sec1(t.sep.lat)}</td><td class="n" style="padding-right:30px">${latCell(t.sep.lat/t.jul.lat-1)}</td></tr>`).join('');
 V.lp_next=`
  <div class="ey">LevelPlay · mediation</div>
  <div class="lead">LevelPlay: what changed and what comes next</div>
@@ -1111,8 +1112,8 @@ V.lp_next=`
    <div class="cap">Dynamic Loading on rewarded video, live across LevelPlay since Sep 3: ads load in parallel rather than one at a time, so they are ready to show sooner. Across LevelPlay, waterfall latency is down roughly 70%. You can follow it in Real Time Pivot.</div>
   </div>
   <div class="card" style="padding:10px 0;overflow-x:auto">
-   <table class="t" style="min-width:380px"><thead><tr><th style="padding-left:30px">Title</th><th style="text-align:right">July</th><th style="text-align:right">September</th><th style="text-align:right;padding-right:30px">Change</th></tr></thead><tbody>${latRows}</tbody></table>
-   <div class="cap" style="padding:8px 30px 4px">Average waterfall latency (load to load success), impression-weighted. Faster loading means fewer players waiting on an ad for a quest or a speed-up.</div>
+   <table class="t" style="min-width:380px"><thead><tr><th style="padding-left:30px">Title</th><th style="text-align:right">July</th><th style="text-align:right">September</th><th style="text-align:right;padding-right:30px">Faster by</th></tr></thead><tbody>${latRows}</tbody></table>
+   <div class="cap" style="padding:8px 30px 4px">Average waterfall latency (load to load success), impression-weighted; lower is better, so green means faster. Family Feud and Titan Uprising already loaded in under 7 seconds, so there was little to gain. Faster loading means fewer players waiting on an ad for a quest or a speed-up.</div>
   </div>
  </div>
  <div class="grid g2" style="margin-top:18px">
