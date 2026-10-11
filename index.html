@@ -1222,7 +1222,7 @@ V.offerwall=`
    ])}<p style="margin-bottom:0"><b>New this quarter:</b> custom copy and background per title, so the creative can match a live event or a currency sale.</p></div>
  </div>
  ${sec('Unity Ads M2E results, Jun 11 to Jul 30','star','s')}
- <div class="note-row" style="margin:-4px 0 12px">From the day M2E went live (Jun 11) to the latest day in the M2E dashboard (Jul 30). Live on Jurassic World Alive, Dragons and Ninja Turtles. Payout only. Jul 15 had a reporting error on payout, so it is left out.</div>
+ <div class="note-row" style="margin:-4px 0 12px">From the day M2E went live (Jun 11) to the latest day in the M2E dashboard (Jul 30). Live on Jurassic World Alive, Dragons and Ninja Turtles. Every number follows a player who starts from the M2E banner, then tracks what they do on the offerwall over the next 7 days. Payout only, and Jul 15 is left out because of a reporting error on payout.</div>
  <div class="dstat-grid">
   ${dstat('Offerwall visitors via M2E',Math.round(K.reach*100)+'%',null,`${K.duvM2E.toLocaleString()} M2E vs ${K.duvOrg.toLocaleString()} organic`,true)}
   ${dstat('Payout added by M2E',pct(K.lift),null,`${moneyFull(K.m2ePay)} on top of ${moneyFull(K.orgPay)} organic`)}
@@ -1242,20 +1242,33 @@ V.offerwall=`
   <div class="card">${lab('M2E payout per week')}${vbars(M2E.weekly_payout.map(w=>dlab(w[0])),[{name:'M2E payout',v:M2E.weekly_payout.map(w=>w[1]),c:C.amber}],{fmt:v=>'$'+Math.round(v).toLocaleString(),sub:M2E.weekly_payout.map((w,i)=>i===0?'from Jun 11':i===M2E.weekly_payout.length-1?'to Jul 30':'')})}<div class="cap">Weeks start on Monday. The first and last weeks are partial (M2E went live Jun 11, data runs to Jul 30). Jul 15 is left out.</div></div>
   <div class="card">${lab('M2E offerwall visitors per week')}${vbars(M2E.weekly_duv.map(w=>dlab(w[0])),[{name:'Daily visitors, summed',v:M2E.weekly_duv.map(w=>w[1]),c:C.demand}],{fmt:v=>(v/1000).toFixed(0)+'k',sub:M2E.weekly_duv.map((w,i)=>i===0?'from Jun 11':i===M2E.weekly_duv.length-1?'to Jul 30':'')})}<div class="cap">Visitors climbed through July, from about 25K a week in late June to 37K by late July.</div></div>
  </div>
+ <div class="card" style="margin-top:18px;padding:22px 30px">
+  ${lab('Where the revenue comes from, US')}
+  <div class="grid g2" style="gap:14px;margin-top:8px">
+   ${[['rob','Dragons: Rise of Berk',4185,2517,1668],['jwa','Jurassic World Alive',2708,1239,1469]].map(x=>`<div style="border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--surface)">
+    <div style="display:flex;align-items:center;gap:8px;font-weight:800;color:var(--ink)">${gimg(x[0],24)}${x[1]}</div>
+    <div style="font-size:30px;font-weight:850;color:var(--ink);margin:8px 0 2px">${moneyFull(x[2])}</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:10px">M2E offerwall revenue to Ludia, US</div>
+    <div style="display:flex;height:12px;border-radius:6px;overflow:hidden" data-tip="Android ${moneyFull(x[3])} · iOS ${moneyFull(x[4])}"><div style="width:${x[3]/x[2]*100}%;background:${C.amber}"></div><div style="flex:1;background:${C.demand}"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:6px;color:var(--body)"><span><b>Android</b> ${moneyFull(x[3])}</span><span><b>iOS</b> ${moneyFull(x[4])}</span></div></div>`).join('')}
+  </div>
+  <div class="cap" style="margin-top:10px">US only, Jul 2 to Aug 31, 2026. This is a separate US view with its own dates, so it does not add up to the all-market totals above.</div>
+ </div>
  <div class="card" style="padding:10px 0;overflow-x:auto;margin-top:18px">
   ${'<div style="padding:8px 30px 4px">'+lab('Who the M2E players are')+'</div>'}
   <table class="t" style="min-width:520px"><thead><tr><th style="padding-left:30px">M2E visitors</th><th style="text-align:right">Conversion</th><th style="text-align:right;padding-right:30px">Payout per visitor</th></tr></thead><tbody>
   ${M2E_FUN.players.map(p=>`<tr><td class="lead2" style="padding-left:30px">${p[0]}<div style="font-size:12px;font-weight:500;color:var(--muted)">${p[1]}</div></td><td class="n">${p[2]}</td><td class="n" style="padding-right:30px">${p[3]}</td></tr>`).join('')}
   </tbody></table>
-  <div class="cap" style="padding:8px 30px 4px">Existing offerwall users who come back through M2E are worth about twice as much as first-timers, so regular reminders like weekend sales pay off with this group. Conversion and payout per visitor are dashboard averages for Jun 11 to Jul 30.</div>
+  <div class="cap" style="padding:8px 30px 4px">Existing offerwall users who come back through M2E are worth about twice as much as first-timers, so regular reminders like weekend sales pay off with this group. Conversion and payout per visitor are dashboard averages for Jun 11 to Jul 30. For context, organic offerwall players convert at 16.5% to 21.3% with $18 to $29 per visitor, and that headroom is what we go after next.</div>
  </div>
- ${sec('Four moves for Q4','star','s')}
+ ${sec('Five moves for Q4','star','s')}
  <div class="grid g2">
   <div class="card" style="padding:12px 30px">${nlist([
    ['Weekend sales, every weekend.','This one is your team\'s idea: a sale from Friday to Monday morning, with an in-game email on Friday. A sale with a message does better than a sale alone, up to +53% revenue and twice the offerwall opens at similar publishers*.'],
    ['Holiday multipliers.','The 2x bonus is set for the upcoming holidays. Christmas and New Year have been 2 to 3 times a normal week for you before, so we\'d plan for 3x there.'],
-   ['Make to Earn on Jurassic World: The Game.','Your largest audience is the one title without it. Messaging on M2E has lifted offerwall revenue up to +10%*.'],
+   ['Bring M2E to the rest of your games.','Jurassic World: The Game first, since it has your largest audience and does not have M2E yet. Messaging on M2E has lifted offerwall revenue up to +10% at similar publishers*.'],
    ['Lift M2E conversion.','Use the new custom copy and art, and show the best live offers in the creative, to close part of the gap with organic.'],
+   ['Review it together each month.','We look at M2E payout and conversion with you every month, so you can see what each change did.'],
   ])}</div>
   <div class="card" style="padding:12px 30px">
    ${lab('What is coming')}
