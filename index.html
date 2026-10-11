@@ -1031,7 +1031,7 @@ V.overview=`
    ['Impressions per player recovered.',`Rise of Berk is at ${DASH.ipdRef.rob.sepPt.toFixed(2)} impressions per DAU (${DASH.ipdRef.rob.sepDay}) against ${DASH.ipdRef.rob.mar.toFixed(2)} before the SDK issue (${DASH.ipdRef.rob.marDay}). Across the portfolio, ${DJ.ipd.toFixed(2)} in July to ${DSEP.ipd.toFixed(2)} in September (${pct(ipdUp)}).`],
    ['Ads load four to five times faster.',`Waterfall latency ${sec1(Q.jul.lat)} in July, ${sec1(Q.sep.lat)} in September. LevelPlay now loads rewarded ads in parallel rather than one at a time (Dynamic Loading, live Sep 3 on SDK 9.0+).`],
    ['Fewer players.',`DAU ${k0(DJ.dau)} in July to ${k0(DSEP.dau)} in September. Jurassic World: The Game ${pct(jwDauDrop)} on both platforms; the other titles moved between ${pct(Math.min(...DASH.titles.filter(t=>t!==dJW).map(t=>t.sep.dau/t.jul.dau-1)))} and ${pct(Math.max(...DASH.titles.filter(t=>t!==dJW).map(t=>t.sep.dau/t.jul.dau-1)))}, which looks like normal back-to-school.`],
-   ['Interstitials are live.','Ninja Turtles started an A/B/C test on Sep 22 (no interstitials, safe and aggressive pacing), segmented by country tier.'],
+   ['Interstitials are live.','Ninja Turtles started an A/B test on Sep 22: half of players with interstitials, half without as the control, outside the US only.'],
    ['Unity Ads grew faster than the stack.',`${money(DATA.UADS.q3.rev)} in Q3, ${pct(DATA.UADS.q3.rev/DATA.UADS.q3.prev-1)} on Q2, after this year's move from SDK 4.10 and 4.12 to 4.16 and 4.18.`],
   ])}</div>
   <div class="card" style="padding:10px 0;overflow-x:auto">
@@ -1144,11 +1144,11 @@ V.lp_next=`
  ${sec('Changed: interstitials, live on Ninja Turtles','star','s')}
  <div class="grid g2">
   <div class="card" style="padding:12px 30px">${nlist([
-   ['A/B/C test since Sep 22.','Group A no interstitials, B safe pacing, C aggressive pacing; tier 1 and tier 3 countries handled by segment.'],
-   ['Set-up fixes along the way.','Players whose country could not be read were falling into a catch-all segment; the waterfall now holds them out.'],
-   ['Early read.','Volume is still small, so we wait for enough days before calling a winner. LevelPlay has no built-in significance score; the raw export from the A/B view is the way to run it.'],
+   ['A/B test since Sep 22, split 50/50.','Group A is the control with interstitials switched off; Group B gets interstitials. They run outside the US only, by country-tier segment, across about 50K daily players on the title.'],
+   ['Set-up fixes along the way.','Players whose country could not be read, and the COPPA-off segment, were falling into a catch-all group; the waterfall now holds them out.'],
+   ['Reading the result.','Real Time Pivot exports the raw test data as a CSV (from a data cube, not a dashboard), and Curtis pulled every device and user ID by test group, per day, from Sep 25 to Oct 7, so your team can run the analysis on your side. We are filing built-in significance and a scheduled group export as feature requests.']
   ])}</div>
-  <div class="callbox"><h4>The next title</h4><p>Jurassic World: The Game runs on rewarded only, while most of its peers also use interstitials. Our suggestion from the last review still stands: start with players who have never paid, 30+ days in, outside the US, with a hard cap and pacing from the Ninja Turtles winner.</p><p style="margin-bottom:0">Your request to keep slow-to-close playables out of interstitials is a good fit for Ad Quality, two pages on.</p></div>
+  <div class="callbox"><h4>The next title</h4><p>Jurassic World: The Game runs on rewarded only, while most of its peers also use interstitials. Our suggestion from the last review still stands: start with players who have never paid, 30+ days in, outside the US, with a hard cap and pacing, once the Ninja Turtles read shows how retention holds.</p><p style="margin-bottom:0">Your request to keep slow-to-close playables out of interstitials is a good fit for Ad Quality, two pages on.</p></div>
  </div>
  <div class="note-row">The LevelPlay roadmap, including the early-access features for segmentation and ad experience, is on the next page.</div>`;
 
@@ -1381,7 +1381,7 @@ V.lp_road=`
  ${sec('See it in action: AI-assisted integration','eye','s')}
  <div class="grid g2" style="align-items:start">
   <div class="ai-vid"><video class="ai-vid-el" src="assets/levelplay_assistant.mp4" poster="assets/levelplay_poster.jpg" preload="metadata" playsinline controls></video><button class="ai-vid-play" type="button" aria-label="Play" onclick="var v=this.previousElementSibling; v.play(); this.parentNode.classList.add('playing');">&#9654;</button></div>
-  <div class="callbox"><h4>Where we would like to go deeper with you</h4><p><b>Early access.</b> Dynamic bid floors on Jurassic World Alive, and Ad UX control alongside the interstitial test. We set them up and read the A/B with you.</p><p><b>Design input.</b> Your team has been clear about segmentation and A/B significance; both are on the product's list, and your feedback shapes how they ship.</p><p style="margin-bottom:0"><b>For new titles.</b> The AI Assistant wires up LevelPlay in plain language, from "I want ads in my game" to a working integration.</p></div>
+  <div class="callbox"><h4>Where we would like to go deeper with you</h4><p><b>Early access.</b> Dynamic bid floors on Jurassic World Alive, and Ad UX control alongside the interstitial test. We set them up and read the A/B with you.</p><p><b>Design input.</b> Your team has been clear about segmentation and A/B significance; both are on the product's list, and your feedback shapes how they ship.</p><p style="margin-bottom:0"><b>For new and existing titles.</b> On a new game, the AI Assistant wires up LevelPlay in plain language, from "I want ads in my game" to a working integration. On the titles you already run, the LevelPlay Unity Integration Skill (beta) guides Claude and other coding agents through the SDK upgrade and the move to the Ad Unit APIs, a head start on Family Feud and Titan Uprising (8.4.0) and the 9.6 update everywhere else.</p></div>
  </div>`;
 
 /* ---------- Unity Exchange ---------- */
@@ -1467,7 +1467,7 @@ const VECTOR_BLOCK=`
 function priorities(){
  var P=[
  ['01','Keep the recovery, grow Jurassic World: The Game',[['Objective','LevelPlay SDK 9.6.0 + Unity Ads adapter 5.9.0 shipped, JW: The Game first; a shared view of the Q4 UA plan for the title.'],['Expected impact','Fewer sessions with no ads, fixes for ANRs and callbacks; every player added is worth more than in Q2.'],['Owner','Ludia engineering + Unity'],['Timing','Q4'],['First action','Engineering slot and target date; Unity confirms the iOS 15 behaviour.'],['Success metric','Impressions per DAU holds at September level after the update; DAU trend back to flat.']]],
- ['02','Interstitials: from one title to two',[['Objective','Read the Ninja Turtles A/B/C test, then a segmented test on Jurassic World: The Game.'],['Expected impact','A second ad format on your largest title, paced so retention holds.'],['Owner','Ludia monetization + Unity'],['Timing','October to December'],['First action','Agree the read date and the significance method on the Ninja Turtles export.'],['Success metric','A winning pacing on Ninja Turtles; a live test on JW: The Game by December.']]],
+ ['02','Interstitials: from one title to two',[['Objective','Read the Ninja Turtles A/B test, then a segmented test on Jurassic World: The Game.'],['Expected impact','A second ad format on your largest title, paced so retention holds.'],['Owner','Ludia monetization + Unity'],['Timing','October to December'],['First action','Agree the read date and the significance method on the Ninja Turtles export.'],['Success metric','A clear revenue and retention read on Ninja Turtles; a live test on JW: The Game by December.']]],
  ['03','Offerwall cadence and reach',[['Objective','Weekend sales with in-game email every weekend; 3x for Christmas and New Year; M2E on Jurassic World: The Game.'],['Expected impact','Your best weeks have been sale weeks with a message behind them; this makes that the default.'],['Owner','Ludia live ops + Unity'],['Timing','From October'],['First action','Share the Q4 sale calendar; we set the multipliers and the M2E placement.'],['Success metric','A message behind every sale; M2E live on four titles.']]],
  ];
  var out='<div class="q3prio">';
