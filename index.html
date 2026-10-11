@@ -1164,6 +1164,7 @@ V.lp_next=`
 
 /* ---------- 04 Offerwall ---------- */
 const K=M2E.kpi, OQ=DATA.OWQ;
+const M2E_FUN={titles:'3',rows:[{k:'Offerwall visitors',m:201914,o:79802},{k:'Offerwall opens',m:234914,o:113188},{k:'Offer impressions',m:3093049,o:1963109},{k:'Offer clicks',m:29517,o:54563},{k:'Completed offers',m:9249,o:18113},{k:'Payout to Ludia',m:8388,o:32797,money:true}],players:[['New to the offerwall','first visit came through M2E','2.2%','$1.39'],['Existing offerwall users','had visited the offerwall before','3.7%','$2.75'],['Returning M2E players','came back through M2E more than once','3.5%','$2.55']]};
 V.offerwall=`
  <div class="ey">Offerwall</div>
  <div class="lead">Offerwall and Unity Ads M2E</div>
@@ -1183,14 +1184,6 @@ V.offerwall=`
    ['Revenue per player is up.',`Net ARPDAU $${OQ.arpdau[1].toFixed(4)} to $${OQ.arpdau[0].toFixed(4)}, per visitor ${usd(OQ.arpduv[1],3)} to ${usd(OQ.arpduv[0],3)}. These totals include one unusual day (Jul 15), so the real lift is a bit smaller, but still clearly up.`],
   ])}</div>
   <div class="callbox"><h4>What it means</h4><p>More players are finding the offerwall, more of them convert once they open it, and offers are paying more. Since sale days bring the most visitors, a sale with an in-game email every weekend is the simplest way to grow it.</p><p style="margin-bottom:0">Visits and conversion aren't affected by Jul 15. The revenue numbers include it, so read them as the direction rather than the exact lift.</p></div>
- </div>
- ${sec('Unity Ads M2E, first results','star','s')}
- <div class="note-row" style="margin:-4px 0 10px">${'In the first weeks ('+M2E.window.replace(', 2026','')+'), '+Math.round(K.reach*100)+'% of offerwall visitors came through M2E, adding '+pct(K.lift).replace('+','')+' in payout on top of organic. M2E visitors convert at '+(K.cvrM2E*100).toFixed(1)+'% vs '+(K.cvrOrg*100).toFixed(1)+'% for organic, so conversion is where the next gains are.'}</div>
- <div class="dstat-grid">
-  ${dstat('Offerwall visitors via M2E',Math.round(K.reach*100)+'%',null,`${K.duvM2E.toLocaleString()} vs ${K.duvOrg.toLocaleString()} organic`,true)}
-  ${dstat('Payout added by M2E',pct(K.lift),null,`${moneyFull(K.m2ePay)} on top of ${moneyFull(K.orgPay)} organic`)}
-  ${dstat('Conversion, M2E',(K.cvrM2E*100).toFixed(1)+'%',null,`Organic ${(K.cvrOrg*100).toFixed(1)}%`)}
-  ${dstat('Payout per visitor, M2E',usd(K.arpduvM2E),null,`Organic ${usd(K.arpduvOrg)}`)}
  </div>
  ${sec('Unity Ads M2E: how it works','eye','s')}
  <div class="benef">
@@ -1228,10 +1221,33 @@ V.offerwall=`
     ['One line of copy,','English, 90 characters max.'],
    ])}<p style="margin-bottom:0"><b>New this quarter:</b> custom copy and background per title, so the creative can match a live event or a currency sale.</p></div>
  </div>
- ${sec('Make to Earn, week by week','chart','s')}
- <div class="grid g2">
-  <div class="card">${lab('M2E payout per week')}${vbars(M2E.weekly_payout.map(w=>dlab(w[0])),[{name:'M2E payout',v:M2E.weekly_payout.map(w=>w[1]),c:C.amber}],{fmt:v=>'$'+Math.round(v).toLocaleString()})}<div class="cap">Live on Jurassic World Alive, Dragons and Ninja Turtles. First and last weeks are partial.</div></div>
-  <div class="card">${lab('M2E visitors per week')}${vbars(M2E.weekly_duv.map(w=>dlab(w[0])),[{name:'Daily visitors, summed',v:M2E.weekly_duv.map(w=>w[1]),c:C.demand}],{fmt:v=>(v/1000).toFixed(0)+'k'})}<div class="cap">Visitors grew every full week through July. Payout per visitor is where M2E still trails organic.</div></div>
+ ${sec('Unity Ads M2E results, Jun 11 to Jul 30','star','s')}
+ <div class="note-row" style="margin:-4px 0 12px">From the day M2E went live (Jun 11) to the latest day in the M2E dashboard (Jul 30). Live on Jurassic World Alive, Dragons and Ninja Turtles. Payout only. Jul 15 had a reporting error on payout, so it is left out.</div>
+ <div class="dstat-grid">
+  ${dstat('Offerwall visitors via M2E',Math.round(K.reach*100)+'%',null,`${K.duvM2E.toLocaleString()} M2E vs ${K.duvOrg.toLocaleString()} organic`,true)}
+  ${dstat('Payout added by M2E',pct(K.lift),null,`${moneyFull(K.m2ePay)} on top of ${moneyFull(K.orgPay)} organic`)}
+  ${dstat('Conversion, M2E visitors',(K.cvrM2E*100).toFixed(1)+'%',null,`Organic visitors ${(K.cvrOrg*100).toFixed(1)}%`)}
+  ${dstat('Titles live',M2E_FUN.titles,null,'Jurassic World Alive, Dragons, Ninja Turtles')}
+ </div>
+ <div class="card" style="margin-top:18px;padding:22px 30px">
+  ${lab('M2E vs organic, step by step')}
+  <div style="display:flex;gap:18px;font-size:12px;color:var(--muted);margin:2px 0 10px"><span><i style="display:inline-block;width:11px;height:11px;border-radius:3px;background:${C.amber};margin-right:6px;vertical-align:-1px"></i>Unity Ads M2E</span><span><i style="display:inline-block;width:11px;height:11px;border-radius:3px;background:${C.demand};margin-right:6px;vertical-align:-1px"></i>Organic</span></div>
+  ${M2E_FUN.rows.map(r=>{const p=Math.round(r.m/(r.m+r.o)*100);const f=v=>r.money?moneyFull(v):v.toLocaleString();return `<div style="display:grid;grid-template-columns:170px 1fr 70px;gap:14px;align-items:center;margin:9px 0">
+   <div style="font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.2">${r.k}</div>
+   <div style="display:flex;height:26px;border-radius:7px;overflow:hidden;background:var(--line)" data-tip="${r.k}: M2E ${f(r.m)} · organic ${f(r.o)}"><div style="width:${p}%;background:${C.amber};display:flex;align-items:center;padding-left:10px;font-size:11.5px;font-weight:700;color:#3a2a00;white-space:nowrap">${f(r.m)}</div><div style="flex:1;background:${C.demand};display:flex;align-items:center;justify-content:flex-end;padding-right:10px;font-size:11.5px;font-weight:700;color:#fff;white-space:nowrap">${f(r.o)}</div></div>
+   <div style="font-size:15px;font-weight:850;color:var(--ink);text-align:right">${p}%</div></div>`;}).join('')}
+  <div class="cap" style="margin-top:8px">Share of each step that came through M2E. M2E brings most of the traffic into the offerwall, and organic visitors still convert more often, which is why payout is the smallest share. Closing part of that gap is the next opportunity.</div>
+ </div>
+ <div class="grid g2" style="margin-top:18px">
+  <div class="card">${lab('M2E payout per week')}${vbars(M2E.weekly_payout.map(w=>dlab(w[0])),[{name:'M2E payout',v:M2E.weekly_payout.map(w=>w[1]),c:C.amber}],{fmt:v=>'$'+Math.round(v).toLocaleString(),sub:M2E.weekly_payout.map((w,i)=>i===0?'from Jun 11':i===M2E.weekly_payout.length-1?'to Jul 30':'')})}<div class="cap">Weeks start on Monday. The first and last weeks are partial (M2E went live Jun 11, data runs to Jul 30). Jul 15 is left out.</div></div>
+  <div class="card">${lab('M2E offerwall visitors per week')}${vbars(M2E.weekly_duv.map(w=>dlab(w[0])),[{name:'Daily visitors, summed',v:M2E.weekly_duv.map(w=>w[1]),c:C.demand}],{fmt:v=>(v/1000).toFixed(0)+'k',sub:M2E.weekly_duv.map((w,i)=>i===0?'from Jun 11':i===M2E.weekly_duv.length-1?'to Jul 30':'')})}<div class="cap">Visitors climbed through July, from about 25K a week in late June to 37K by late July.</div></div>
+ </div>
+ <div class="card" style="padding:10px 0;overflow-x:auto;margin-top:18px">
+  ${'<div style="padding:8px 30px 4px">'+lab('Who the M2E players are')+'</div>'}
+  <table class="t" style="min-width:520px"><thead><tr><th style="padding-left:30px">M2E visitors</th><th style="text-align:right">Conversion</th><th style="text-align:right;padding-right:30px">Payout per visitor</th></tr></thead><tbody>
+  ${M2E_FUN.players.map(p=>`<tr><td class="lead2" style="padding-left:30px">${p[0]}<div style="font-size:12px;font-weight:500;color:var(--muted)">${p[1]}</div></td><td class="n">${p[2]}</td><td class="n" style="padding-right:30px">${p[3]}</td></tr>`).join('')}
+  </tbody></table>
+  <div class="cap" style="padding:8px 30px 4px">Existing offerwall users who come back through M2E are worth about twice as much as first-timers, so regular reminders like weekend sales pay off with this group. Conversion and payout per visitor are dashboard averages for Jun 11 to Jul 30.</div>
  </div>
  ${sec('Four moves for Q4','star','s')}
  <div class="grid g2">
@@ -1266,7 +1282,7 @@ V.offerwall=`
  ].map(r=>`<tr><td class="lead2" style="padding-left:20px">${r[0]}</td><td style="color:var(--body)">${r[1]}</td><td style="color:var(--body)">${r[2]}</td><td class="n" style="color:var(--demandInk);font-weight:700;padding-right:20px">${r[3]}</td></tr>`).join("")}
  </tbody></table></div>
  <div class="cap" style="margin-top:8px">Also improved this year, with nothing for you to do: offer ranking moved to a new model on iOS in the US (+2.3% revenue per user), a new conversion model (+4.0%), and new players now see the best offers first (+5.6% per user). Android and other markets are next.</div>
- <div class="note-row">M2E figures: Unity Ads M2E dashboard, Ludia, ${M2E.window}, all countries, with Jul 15 left out of payout. *Ranges seen at similar Unity publishers, not Ludia results. We'd set each one up as a test.</div>`;
+ <div class="note-row">M2E figures: Unity Ads M2E dashboard, Ludia, Jun 11 to Jul 30, 2026 (latest data available), all countries, with Jul 15 left out of payout. *Ranges seen at similar Unity publishers, not Ludia results. We'd set each one up as a test.</div>`;
 
 /* ---------- 05 Unity Ads ---------- */
 const U=DATA.UADS, UQ3=U.q3;
