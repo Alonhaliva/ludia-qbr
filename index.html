@@ -1151,14 +1151,19 @@ V.lp_next=`
   </tbody></table>
   <div class="cap" style="padding:8px 30px 4px">Main SDK version per title. None of your titles is on 9.6 yet, though we can see test builds on 9.6.0 (Jurassic World Alive) and 9.6.1 (Ninja Turtles).</div>
  </div>
- ${sec('Changed: interstitials, live on Ninja Turtles','star','s')}
+ ${sec('Interstitials on Ninja Turtles: how the test is going','star','s')}
  <div class="grid g2">
-  <div class="card" style="padding:12px 30px">${nlist([
-   ['A/B test since Sep 22, split 50/50.','Group A is the control with no interstitials, Group B gets them. They run outside the US only, by country tier, across about 50K daily players.'],
-   ['Fixes along the way.','Some players were landing in a catch-all group, mostly where we couldn\'t read the country. That\'s fixed, so the test groups are clean.'],
-   ['Reading the result.','You can export the raw test data from Real Time Pivot as a CSV, and we\'ve shared the full list of players in each group, by day, from Sep 25 to Oct 7, so your team can run the analysis your way. We\'re also asking product for built-in significance and a scheduled export of test groups.']
+  <div class="card" style="padding:12px 30px">${lab('How it is going')}${nlist([
+   ['Live since Sep 22, split 50/50.','Group A sees no interstitials, Group B does. They run outside the US only, by country tier, across about 50K daily players.'],
+   ['Revenue is small so far.','Group B mostly shows interstitials in tier 3 countries, where ad prices are much lower than in the US and other tier 1 markets.'],
+   ['Group A is hard to measure.','Players who see no interstitials don\'t show up in impression reporting, which is why the player counts were hard to line up. We shared the full player list by group, by day, from Sep 25 to Oct 7, so your team can run the analysis your way.'],
   ])}</div>
-  <div class="callbox"><h4>The next title</h4><p>Jurassic World: The Game only runs rewarded ads today, while most similar games also use interstitials. Once Ninja Turtles shows how retention holds, we'd suggest starting with players who've never paid, 30+ days in, outside the US, with a firm cap and pacing.</p><p style="margin-bottom:0">Your request to keep slow-to-close playables out of interstitials is something Ad Quality can help with. More on that in the Ad Quality section.</p></div>
+  <div class="callbox"><h4>What we'd do differently on the next title</h4>${nlist([
+   ['Test two versions, not on vs off.','Compare two caps or pacing settings, so both groups get interstitials and both show up in the reports.'],
+   ['Start simple.','One or two country groups to begin with, then add segments once the first read is in.'],
+   ['Include higher-value markets.','Add a tier 1 market with a light cap to one group, so the result reflects real revenue, not just tier 3.'],
+   ['Agree the read up front.','The success metric (revenue per player and retention), where each number comes from, and the date we read it.'],
+  ])}<p style="margin-bottom:0">For Jurassic World: The Game, which only runs rewarded ads today, we'd start with players who've never paid, 30+ days in, with a firm cap. We've also raised the reporting gaps with product: built-in significance and an export of test groups.</p></div>
  </div>
  <div class="note-row">The LevelPlay roadmap, including the early-access features for segmentation and ad experience, is on the next page.</div>`;
 
@@ -1545,7 +1550,7 @@ const VECTOR_BLOCK=`
 function priorities(){
  var P=[
  ['01','Keep the recovery, grow Jurassic World: The Game',[['Objective','Ship LevelPlay SDK 9.6.0 and Unity Ads adapter 5.9.0, JW: The Game first, and align on the Q4 UA plan for the title.'],['Expected impact','Fewer sessions without ads, fewer ANRs, and more value from every new player.'],['Owner','Ludia engineering + Unity'],['Timing','Q4'],['First action','Pick an engineering slot and date, and we confirm the iOS 15 question.'],['Success metric','Impressions per DAU stays at September levels after the update, and DAU stops falling.']]],
- ['02','Interstitials: from one title to two',[['Objective','Read the Ninja Turtles A/B test, then a segmented test on Jurassic World: The Game.'],['Expected impact','A second ad format on your largest title, paced so retention holds.'],['Owner','Ludia monetization + Unity'],['Timing','October to December'],['First action','Agree when and how to read the Ninja Turtles results.'],['Success metric','A clear revenue and retention read on Ninja Turtles, and a live test on JW: The Game by December.']]],
+ ['02','Interstitials: from one title to two',[['Objective','Read the Ninja Turtles test, then run a simpler two-version test (two caps or pacing settings) on Jurassic World: The Game.'],['Expected impact','A second ad format on your largest title, paced so retention holds.'],['Owner','Ludia monetization + Unity'],['Timing','October to December'],['First action','Agree when and how to read the Ninja Turtles results.'],['Success metric','A clear revenue and retention read on Ninja Turtles, and a live test on JW: The Game by December.']]],
  ['03','More offerwall visitors',[['Objective','A sale with an in-game email every weekend, 3x for Christmas and New Year, and M2E on Jurassic World: The Game.'],['Expected impact','Your best weeks are sale weeks with a message behind them, so let\'s make that the norm.'],['Owner','Ludia live ops + Unity'],['Timing','From October'],['First action','Share the Q4 sale calendar, and we\'ll set up the multipliers and M2E.'],['Success metric','A message behind every sale, and M2E live on four titles.']]],
  ];
  var out='<div class="q3prio">';
