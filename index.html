@@ -950,20 +950,21 @@ const lab=t=>`<div style="font-size:12px;font-weight:800;color:var(--demandInk);
 /* ---------- agenda ---------- */
 const V={};
 const AGENDA=[
- {id:'overview',t:'The quarter in one page',d:'Where things landed, and what we\'d like to do next.',m:4,g:'Overview'},
- {id:'lp_perf',t:'LevelPlay: the numbers',d:'Revenue per player is up, player numbers are down.',m:6,g:'Products'},
- {id:'lp_next',t:'LevelPlay: what changed and what comes next',d:'Faster rewarded loading, SDK 9.6.0, interstitials, roadmap.',m:7,g:'Products'},
- {id:'lp_road',t:'LevelPlay: new features and roadmap',d:'What\'s live, what\'s in early access, and what\'s coming.',m:5,g:'Products'},
- {id:'offerwall',t:'Offerwall and Unity Ads M2E',d:'Q3 vs Q2, how M2E works, and what to do next.',m:5,g:'Products'},
- {id:'unity',t:'Unity Ads',d:'Growth since the Bold SDK, and 4.20.1 next.',m:5,g:'Products'},
- {id:'exchange',t:'Unity Exchange',d:'New buyers, identity and measurement on your inventory.',m:3,g:'Products'},
- {id:'adquality',t:'Ad Quality',d:'See the ads your players see, and act on the ones that hurt.',m:4,g:'Products'},
- {id:'growth',t:'Growing the player base',d:'For your UA team: Unity Ads 2026 roadmap and Campaign Assistant.',m:4,g:'Growth'},
- {id:'plan',t:'Q4 plan and your questions',d:'Three priorities, owners and dates.',m:6,g:'Plan'},
- {id:'summary',t:'One page to take with you',d:'The quarter on one page.',m:2,g:'Plan'},
- {id:'appendix',t:'Appendix',d:'Every title by platform, method and sources.',m:0,g:'Appendix'},
+ {id:'overview',r:'The quarter in one page',t:'The quarter in one page',d:'Where things landed, and the one thing we\'re asking for.',m:4,g:'Overview'},
+ {id:'lp_perf',r:'LevelPlay: the numbers',t:'Each player earns more, there are just fewer of them',d:'Revenue per player is up, player numbers are down, and how you compare.',m:5,g:'Products'},
+ {id:'lp_next',r:'LevelPlay: what changed',t:'Ads load 80% faster, and one SDK update locks it in',d:'Faster loading, SDK 9.6.0, and the interstitial test.',m:6,g:'Products'},
+ {id:'lp_road',r:'LevelPlay: roadmap',t:'Early access to dynamic floors, ad UX control and smart segmentation',d:'What you can turn on now, floors, and what\'s coming.',m:4,g:'Products'},
+ {id:'offerwall',r:'Offerwall and M2E',t:'M2E brings most offerwall visitors, conversion is the next step',d:'Q3 vs Q2, how M2E works, and five moves for Q4.',m:5,g:'Products'},
+ {id:'unity',r:'Unity Ads',t:'Unity Ads grew 27% since the move to the Bold SDK',d:'The SDK story, and 4.20.1 next.',m:4,g:'Products'},
+ {id:'adquality',r:'Ad Quality',t:'You already use Ad Quality, let\'s make it a regular check',d:'What it does, and the plan for your titles.',m:3,g:'Products'},
+ {id:'plan',r:'Q4 plan and your questions',t:'Q4 plan and your questions',d:'Three priorities, owners and dates.',m:7,g:'Plan'},
+ {id:'summary',r:'One page to take with you',t:'One page to take with you',d:'The quarter on one page.',m:2,g:'Plan'},
+ {id:'growth',r:'For your UA team',t:'Appendix · For your UA team',d:'Unity Ads 2026 roadmap and Campaign Assistant.',m:0,g:'Appendix'},
+ {id:'exchange',r:'Unity Exchange',t:'Appendix · Unity Exchange',d:'New buyers, identity and measurement on your inventory.',m:0,g:'Appendix'},
+ {id:'ow_check',r:'Offerwall checklist',t:'Appendix · Offerwall checklist',d:'Nine levers and where Ludia stands on each.',m:0,g:'Appendix'},
+ {id:'appendix',r:'Sources and detail',t:'Appendix · Sources and detail',d:'Every title by platform, method and sources.',m:0,g:'Appendix'},
 ];
-const GROUPS=['Overview','Products','Growth','Plan','Appendix'];
+const GROUPS=['Overview','Products','Plan','Appendix'];
 const GTHEME={Overview:'The quarter on one page, and what we\'d like to do next',Products:'One page per product: what changed and what\'s next',Growth:'The player base, and what Unity Ads brings your UA team',Plan:'Three priorities, your questions, one page to forward',Appendix:'Extra detail, if it comes up'};
 const ORDER=(function(){var o=['welcome','agenda'],lg=null;AGENDA.forEach(function(a){if(a.g!==lg){o.push('div:'+a.g);lg=a.g;}o.push(a.id);});return o;})();
 
@@ -982,12 +983,13 @@ V.agenda=(function(){
  const main=AGENDA.filter(x=>x.g!=='Appendix'); const total=main.reduce((s,x)=>s+x.m,0);
  const groups=GROUPS.filter(g=>g!=='Appendix').map((g,gi)=>({g,gi,items:main.filter(x=>x.g===g),mins:main.filter(x=>x.g===g).reduce((s,x)=>s+x.m,0)}));
  const bar=groups.map(gr=>`<div class="rs-seg" style="flex:${gr.mins}" data-tip="${gr.g}: ${gr.mins} min"><span>${gr.g}</span><b>${gr.mins} min</b></div>`).join('');
- const cols=groups.map(gr=>`<div class="ag-col"><div class="ag-colhead"><span class="ag-cn">0${gr.gi+1}</span><div><div class="ag-cg">${gr.g}</div><div class="ag-ct">${GTHEME[gr.g]}</div></div></div>${gr.items.map(it=>`<button class="ag-it" onclick="go('${it.id}')"><span class="ag-in">${('0'+(main.indexOf(it)+1)).slice(-2)}</span><span class="ag-itt">${it.t}</span><span class="ag-im">${it.m}m</span></button>`).join('')}</div>`).join('');
+ const cols=groups.map(gr=>`<div class="ag-col"><div class="ag-colhead"><span class="ag-cn">0${gr.gi+1}</span><div><div class="ag-cg">${gr.g}</div><div class="ag-ct">${GTHEME[gr.g]}</div></div></div>${gr.items.map(it=>`<button class="ag-it" onclick="go('${it.id}')"><span class="ag-in">${('0'+(main.indexOf(it)+1)).slice(-2)}</span><span class="ag-itt">${it.r||it.t}</span><span class="ag-im">${it.m}m</span></button>`).join('')}</div>`).join('');
  return `<div class="agenda2"><div class="agenda-label">Agenda</div><h2 class="ap-title" style="margin-bottom:6px">What we'll cover today</h2>
   <div class="ag-sub">We'll start with LevelPlay, since all your ad revenue runs through it, then the offerwall, Unity Ads and Ad Quality. About ${total} minutes, with plenty of time to talk.</div>
-  <div class="rs-bar">${bar}<div class="rs-seg rs-disc" style="flex:10"><span>Discussion</span><b>10+ min</b></div></div>
+  <div class="reco" style="margin:0 0 16px"><b>Topics your team raised with us, covered along the way:</b> the interstitial test and its data, what players below iOS 15 see after the SDK update, and offerwall sales for the holidays. Anything you'd like to add or move up before we start?</div>
+  <div class="rs-bar">${bar}<div class="rs-seg rs-disc" style="flex:15"><span>Discussion</span><b>15+ min</b></div></div>
   <div class="ag-cols">${cols}</div>
-  <div class="ag-foot">More detail is in the appendix if we need it.</div></div>`;
+  <div class="ag-foot">More detail, including the UA roadmap, Unity Exchange and the offerwall checklist, is in the appendix if we need it.</div></div>`;
 })();
 
 /* ---------- 01 overview ---------- */
@@ -1014,10 +1016,10 @@ V.overview=`
 
  ${sec('What we are asking for','star','s')}
  <div class="opp-hero" style="margin-top:6px">
-  <div class="tag">The asks · Q4</div>
-  <h3>Update to LevelPlay SDK 9.6.0, and talk about growing players on Jurassic World: The Game</h3>
-  <p>Each player is earning more again: more impressions, faster ads, higher ARPDAU. From here, revenue grows with the number of players. Jurassic World: The Game brings in ${Math.round(jwShare*100)}% of your ad revenue and had ${k0(dJW.jul.dau-dJW.sep.dau)} fewer daily players in September than in July, ${Math.round(jwShareDrop*100)}% of the overall drop.</p>
-  <div class="opp-terms"><div class="opp-term"><b>Product</b>9.6.0 + adapter 5.9.0, JW: The Game first</div><div class="opp-term"><b>Audience</b>Your Q4 UA plan for JW: The Game, and where Unity UA fits</div><div class="opp-term"><b>Formats</b>Read the Ninja Turtles interstitial test, then pick the next title</div></div>
+  <div class="tag">The ask · Q4</div>
+  <h3>One SDK update this quarter: LevelPlay 9.6.0, Unity Ads adapter 5.9.0 and Unity Ads SDK 4.20.1, starting with Jurassic World: The Game</h3>
+  <p>It keeps the impression recovery in place with an init retry, brings Dynamic Loading to Family Feud and Titan Uprising, and moves the last 12% of Unity Ads traffic off older SDKs. On today's Unity Ads revenue, Unity's published ranges for the newer SDK (up to 10% more impression opportunities and up to 15% more revenue per impression) work out to roughly <b>${money(DATA.UADS.q3.rev*0.10)} to ${money(DATA.UADS.q3.rev*(1.10*1.15-1))} a quarter</b>, if they hold on your inventory. We'd plan on the low end.</p>
+  <div class="opp-terms"><div class="opp-term"><b>Primary</b>The update on Jurassic World: The Game in Q4, then Family Feud and Titan Uprising</div><div class="opp-term"><b>Secondary</b>30 minutes with your UA lead on Jurassic World: The Game players</div><div class="opp-term"><b>What we need today</b>An engineering owner and a target date</div></div>
  </div>
 
  ${sec('Where the money comes from','flow','s')}
@@ -1031,7 +1033,7 @@ V.overview=`
   <div class="card" style="padding:12px 30px">${nlist([
    ['Impressions per player recovered.',`Rise of Berk is back at ${DASH.ipdRef.rob.sepPt.toFixed(2)} impressions per daily player (${DASH.ipdRef.rob.sepDay}), up from ${DASH.ipdRef.rob.mar.toFixed(2)} before the SDK update (${DASH.ipdRef.rob.marDay}). Across all titles, it went from ${DJ.ipd.toFixed(2)} in July to ${DSEP.ipd.toFixed(2)} in September (${pct(ipdUp)}).`],
    ['Ads load four to five times faster.',`Waterfall latency went from ${sec1(Q.jul.lat)} in July to ${sec1(Q.sep.lat)} in September. Since Sep 3, LevelPlay loads rewarded ads in parallel instead of one at a time (Dynamic Loading, SDK 9.0+).`],
-   ['Fewer players.',`Daily players went from ${k0(DJ.dau)} in July to ${k0(DSEP.dau)} in September. Jurassic World: The Game was down ${pct(jwDauDrop).replace('−','')} on both platforms, while the other titles moved between ${pct(Math.min(...DASH.titles.filter(t=>t!==dJW).map(t=>t.sep.dau/t.jul.dau-1)))} and ${pct(Math.max(...DASH.titles.filter(t=>t!==dJW).map(t=>t.sep.dau/t.jul.dau-1)))}, which looks like a normal back-to-school dip.`],
+   ['Fewer players, and what they are worth.',`Daily players went from ${k0(DJ.dau)} in July to ${k0(DSEP.dau)} in September. Jurassic World: The Game was down ${pct(jwDauDrop).replace('−','')} on both platforms, while the other titles moved between ${pct(Math.min(...DASH.titles.filter(t=>t!==dJW).map(t=>t.sep.dau/t.jul.dau-1)))} and ${pct(Math.max(...DASH.titles.filter(t=>t!==dJW).map(t=>t.sep.dau/t.jul.dau-1)))}, which looks like a normal back-to-school dip. Winning back Jurassic World: The Game's ${k0(dJW.jul.dau-dJW.sep.dau)} lost daily players at today's revenue per player would be worth about ${money((dJW.jul.dau-dJW.sep.dau)*dJW.q3.arp/100)} a day, roughly ${money((dJW.jul.dau-dJW.sep.dau)*dJW.q3.arp/100*92)} a quarter.`],
    ['Interstitials are live.','Ninja Turtles started an A/B test on Sep 22: half of players with interstitials, half without as the control, outside the US only.'],
    ['Unity Ads grew faster than the rest of your stack.',`It earned ${money(DATA.UADS.q3.rev)} in Q3, up ${pct(DATA.UADS.q3.rev/DATA.UADS.q3.prev-1).replace('+','')} on Q2, after this year's move from SDK 4.10 and 4.12 to 4.16 and 4.18.`],
   ])}</div>
@@ -1057,7 +1059,7 @@ const dd=DASH.daily, ddLab=dd.map(x=>dlab(x.d));
 const ma7=a=>a.map((_,i)=>{let s=0,c=0;for(let j=Math.max(0,i-6);j<=i;j++){s+=a[j];c++}return s/c});
 V.lp_perf=`
  <div class="ey">LevelPlay · mediation</div>
- <div class="lead">LevelPlay: the numbers</div>
+ <div class="lead">Each player earns more, there are just fewer of them</div>
  <div class="sublead">All your ad revenue runs through LevelPlay. Here's Q3 against Q2 as your dashboard shows it, then July against September to show how the quarter moved.</div>
  ${takeaway(`Revenue per player, impressions per player and eCPM are all up: ARPDAU ${pct(DS.arpChg)}, impressions per DAU ${pct(DS.ipdChg)}, eCPM ${pct(DS.ecpmChg)}. Leaving out two unusual days, revenue is flat with Q2: higher revenue per player is making up for ${pct(dauDrop).replace('−','')} fewer daily players between July and September, and ${Math.round(jwShareDrop*100)}% of that drop is Jurassic World: The Game.`)}
  <div class="dstat-grid">
@@ -1092,6 +1094,23 @@ V.lp_perf=`
   <table class="t" style="min-width:720px"><thead><tr><th style="padding-left:30px">Title</th><th style="text-align:right">Q3 revenue</th><th style="text-align:right">ARPDAU</th><th style="text-align:right">DAU, Jul → Sep</th><th style="text-align:right">Change</th><th style="text-align:right">Imp/DAU, Jul → Sep</th><th style="text-align:right;padding-right:30px">Change</th></tr></thead><tbody>${dRows}</tbody></table>
   <div class="cap" style="padding:8px 30px 4px">LevelPlay performance dashboard, both platforms combined (split in the appendix). Q3 revenue and ARPDAU exclude Jul 10 and 15. DC Heroes & Villains wound down in June.</div>
  </div>
+ ${sec('How you compare: ads per player','users','s')}
+ <div class="grid g2">
+  <div class="card" style="padding:10px 0;overflow-x:auto">
+   <table class="t" style="min-width:420px"><thead><tr><th style="padding-left:30px">Title</th><th style="text-align:right">Impressions per DAU, Sep</th><th style="text-align:right;padding-right:30px">vs category low end</th></tr></thead><tbody>
+   ${DASH.titles.filter(t=>t.sep.imp>0).map(t=>{const v=t.sep.ipd;const below=v<1.3;return `<tr><td class="lead2" style="padding-left:30px">${gimg(t.icon,20)}${t.name}</td><td class="n" style="font-weight:800">${v.toFixed(2)}</td><td class="n" style="padding-right:30px">${below?'<span class="tag-ask">below</span>':'<span class="tag-live">in range</span>'}</td></tr>`;}).join('')}
+   </tbody></table>
+  </div>
+  <div class="card" style="padding:16px 30px">
+   ${lab('Category ranges (25th to 75th percentile)')}
+   <table class="t" style="margin:6px -30px 0;width:calc(100% + 60px)"><thead><tr><th style="padding-left:30px">Category</th><th style="text-align:right">US</th><th style="text-align:right;padding-right:30px">Rest of world</th></tr></thead><tbody>
+    <tr><td class="lead2" style="padding-left:30px">Mid-core</td><td class="n">1.3 to 2.5</td><td class="n" style="padding-right:30px">1.6 to 2.6</td></tr>
+    <tr><td class="lead2" style="padding-left:30px">Casual</td><td class="n">1.6 to 5.5</td><td class="n" style="padding-right:30px">1.8 to 6.2</td></tr>
+   </tbody></table>
+   <p class="prose" style="margin:12px 0 0">Jurassic World: The Game and Rise of Berk sit around the mid-core middle. Jurassic World Alive, Family Feud and Ninja Turtles show fewer ads per player than the low end of either category, which leaves room for well-placed rewarded ads, like the new placements your JWA team is planning.</p>
+  </div>
+ </div>
+ <div class="cap" style="margin-top:8px">Unity LevelPlay category benchmarks from our Q3 2026 review set. Your titles are worldwide while the ranges are split US and rest of world, so read this as a guide, not an exact match.</div>
  ${sec('A question for you','star','s')}
  <div class="callbox"><h4>What's the plan for Jurassic World: The Game players in Q4?</h4><p>Each player is earning more than at any point this year, so every new player is worth more than in Q2. If a UA push is planned, we'd love to line it up with the 9.6.0 update and the interstitial test, and pick up the conversation we started with your UA team at GDC.</p><p style="margin-bottom:0">And if the drop comes from the game side, like a content gap, an event ending or older devices being dropped, knowing that helps us set the right floors and pacing.</p></div>`;
 
@@ -1102,7 +1121,7 @@ const latCell=x=>{const c=x<=-0.10?'var(--pos)':x>=0.10?'var(--neg)':'var(--mute
 const latRows=LIVE.filter(t=>t.jul.imp>0).map(t=>`<tr><td class="lead2" style="padding-left:30px">${gimg(t.icon,20)}${t.name}</td><td class="n" style="color:var(--muted)">${sec1(t.jul.lat)}</td><td class="n" style="font-weight:800">${sec1(t.sep.lat)}</td><td class="n" style="padding-right:30px">${latCell(t.sep.lat/t.jul.lat-1)}</td></tr>`).join('');
 V.lp_next=`
  <div class="ey">LevelPlay · mediation</div>
- <div class="lead">LevelPlay: what changed and what comes next</div>
+ <div class="lead">Ads load 80% faster, and one SDK update locks it in</div>
  <div class="sublead">Three things changed this quarter, and there's one update on your side we'd like to plan together.</div>
  ${takeaway(`Rewarded ads now load ${pct(latChg).replace('−','')} faster than in July. Next up is LevelPlay SDK 9.6.0 with Unity Ads adapter 5.9.0, which adds an init retry so fewer sessions start without ads.`)}
  ${sec('Changed: faster rewarded loading','gauge','s')}
@@ -1173,7 +1192,7 @@ const K=M2E.kpi, OQ=DATA.OWQ;
 const M2E_FUN={titles:'3',rows:[{k:'Offerwall visitors',m:201914,o:79802},{k:'Offerwall opens',m:234914,o:113188},{k:'Offer impressions',m:3093049,o:1963109},{k:'Offer clicks',m:29517,o:54563},{k:'Completed offers',m:9249,o:18113},{k:'Payout to Ludia',m:8388,o:32797,money:true}],players:[['New to the offerwall','first visit came through M2E','2.2%','$1.39'],['Existing offerwall users','had visited the offerwall before','3.7%','$2.75'],['Returning M2E players','came back through M2E more than once','3.5%','$2.55']]};
 V.offerwall=`
  <div class="ey">Offerwall</div>
- <div class="lead">Offerwall and Unity Ads M2E</div>
+ <div class="lead">M2E brings most offerwall visitors, conversion is the next step</div>
  <div class="sublead">Unity Ads M2E (Make to Earn) uses a rewarded video slot to promote your own offerwall. It's live on three titles and already brings in most of your offerwall visitors. The next gains are Jurassic World: The Game, regular sales and messaging.</div>
  ${takeaway(`Compared with Q2, more players visited the offerwall (${(OQ.reach[0]*100).toFixed(2)}% of daily players, ${pct(OQ.reach[0]/OQ.reach[1]-1)}), more of those who opened it converted (${Math.round(OQ.cvr[0]*100)}% vs ${Math.round(OQ.cvr[1]*100)}%), and each converting player was worth more. M2E and currency sales are driving the extra visits.`)}
  ${sec('Offerwall, Q3 against Q2','chart','s')}
@@ -1282,6 +1301,13 @@ V.offerwall=`
    <div class="reco" style="margin-top:10px"><b>On segmentation:</b> keeping payers away from the offerwall needs player tags sent when the SDK starts. LevelPlay segments and Smart segmentation (early access) can do this, and we're happy to scope it with you.</div>
   </div>
  </div>
+ <div class="note-row">The full offerwall optimization checklist, with where Ludia stands on each lever, is in the appendix.</div>
+ <div class="note-row">M2E figures: Unity Ads M2E dashboard, Ludia, Jun 11 to Jul 30, 2026 (latest data available), all countries, with Jul 15 left out of payout. *Ranges seen at similar Unity publishers, not Ludia results. We'd set each one up as a test.</div>`;
+
+V.ow_check=`
+ <div class="ey">Appendix · Offerwall</div>
+ <div class="lead">Offerwall optimization checklist, 2026 edition</div>
+ <div class="sublead">Nine levers, what each has done at similar publishers, and where Ludia stands.</div>
  ${sec('Offerwall optimization checklist, 2026 edition','plan','s')}
  <div class="card" style="padding:6px 0;overflow-x:auto"><table class="t ow-check" style="font-size:12.5px"><thead><tr><th style="padding-left:20px">Lever</th><th>What it does</th><th>Seen elsewhere*</th><th style="text-align:right;padding-right:20px">Ludia</th></tr></thead><tbody>
  ${[
@@ -1297,7 +1323,7 @@ V.offerwall=`
  ].map(r=>`<tr><td class="lead2" style="padding-left:20px">${r[0]}</td><td style="color:var(--body)">${r[1]}</td><td style="color:var(--body)">${r[2]}</td><td class="n" style="color:var(--demandInk);font-weight:700;padding-right:20px">${r[3]}</td></tr>`).join("")}
  </tbody></table></div>
  <div class="cap" style="margin-top:8px">Also improved this year, with nothing for you to do: offer ranking moved to a new model on iOS in the US (+2.3% revenue per user), a new conversion model (+4.0%), and new players now see the best offers first (+5.6% per user). Android and other markets are next.</div>
- <div class="note-row">M2E figures: Unity Ads M2E dashboard, Ludia, Jun 11 to Jul 30, 2026 (latest data available), all countries, with Jul 15 left out of payout. *Ranges seen at similar Unity publishers, not Ludia results. We'd set each one up as a test.</div>`;
+ <div class="note-row">*Ranges seen at similar Unity publishers, not Ludia results. We'd set each one up as a test.</div>`;
 
 /* ---------- 05 Unity Ads ---------- */
 const U=DATA.UADS, UQ3=U.q3;
@@ -1326,7 +1352,7 @@ function stackArea(labels, series, opts={}){
 }
 V.unity=`
  <div class="ey">Unity Ads · a bidder in your LevelPlay auction</div>
- <div class="lead">Unity Ads</div>
+ <div class="lead">Unity Ads grew 27% since the move to the Bold SDK</div>
  <div class="sublead">Unity Ads competes for your impressions inside LevelPlay. This year you moved from SDK 4.10 and 4.12 to our Bold SDK (4.16), then added 4.18. The price Unity Ads pays has climbed since, and 4.18 is adding volume on top.</div>
  ${takeaway(`Unity Ads revenue grew ${pct(uChg).replace('+','')} in Q3 to ${money(UQ3.rev)}, with ${pct(uImpChg).replace('+','')} more impressions and a ${pct(uEcpmChg).replace('+','')} higher eCPM, while your overall LevelPlay revenue held flat. Unity Ads is now about ${Math.round(uShareQ3*100)}% of your ad revenue, up from about ${Math.round(uShareQ2*100)}% in Q2. On the Bold SDK 4.16.6 alone, eCPM went from ${usd(s4166.pecpm)} to ${usd(s4166.ecpm)}.`)}
  <div class="dstat-grid">
@@ -1381,7 +1407,7 @@ V.unity=`
 /* ---------- 06 Ad Quality ---------- */
 V.adquality=`
  <div class="ey">Ad Quality · player experience</div>
- <div class="lead">Ad Quality</div>
+ <div class="lead">You already use Ad Quality, let's make it a regular check</div>
  <div class="sublead">With interstitials live, what players see matters even more. Ad Quality shows every ad in your games, which ones cost you players, and lets you act before players complain.</div>
  ${takeaway('Your team already uses Ad Quality: User Journey helped you find the explicit ad and the freezing ad in August, and you asked us to block Viking Rise in September. With interstitials live and the slow-to-close playables you flagged, the next step is making it a regular check on every title.')}
  ${sec('Why it matters','star','s')}
@@ -1421,7 +1447,7 @@ V.adquality=`
 /* ---------- LevelPlay roadmap and new features ---------- */
 V.lp_road=`
  <div class="ey">LevelPlay · roadmap</div>
- <div class="lead">LevelPlay: new features and the roadmap</div>
+ <div class="lead">Early access to dynamic floors, ad UX control and smart segmentation</div>
  <div class="sublead">Where LevelPlay is heading, what you can turn on now, and what's coming in the next two quarters. A few of these answer questions your team raised this year.</div>
  ${takeaway('The roadmap focuses on three things: smarter automation, more competition for every impression, and more control over the player experience. Dynamic bid floors, Ad UX control and Smart segmentation are all in early access, and they fit right into your interstitial test and segmentation work.')}
  ${sec('Where LevelPlay is investing','star','s')}
@@ -1445,6 +1471,12 @@ V.lp_road=`
   ])}</div>
   <div class="callbox"><h4>Where we'd start</h4><p>Jurassic World Alive and Titan Uprising, as part of the floors review in the Q4 plan. We'll suggest the starting floors for each ad unit and read the results with you.</p><p style="margin-bottom:0"><b>Coming later in Q4:</b> our own dynamic floor service, which sets a unique floor for every auction.</p></div>
  </div>
+ <div class="note-row" style="margin-top:10px">Two rules of thumb: add floors when daily players hold steady but engagement drops, and keep waterfall lines at higher price points.</div>
+ ${sec('Worth checking: one more bidder','users','s')}
+ <div class="lp-notes" style="grid-template-columns:repeat(4,1fr)">
+  ${[['Moloco','All markets','Puzzle, hyper-casual, simulation'],['Pangle','New to the US','Match-3, hyper-casual, simulation'],['HyprMX','All markets, stronger on iOS','Casino, puzzle, simulation'],['InMobi','All markets, stronger on Android','Puzzle, hyper-casual, sports']].map(n=>`<div class="lp-note"><span class="lp-badge live">Bidding</span><h4>${n[0]}</h4><p>${n[1]}. Top genres: ${n[2]}.</p></div>`).join('')}
+ </div>
+ <div class="note-row">All four bid on rewarded, interstitial and banner. Adding one more competitive bidder has lifted revenue by up to 10% at similar publishers*, and several are strongest in simulation, your genre. We'll check which are already in your stack. *Seen elsewhere, not a Ludia result.</div>
  ${sec('The roadmap, by timing','chart','s')}
  <div class="roadmap" style="grid-template-columns:repeat(3,1fr)">
   <div class="rq"><h4>Live</h4>
@@ -1475,7 +1507,7 @@ V.lp_road=`
 
 /* ---------- Unity Exchange ---------- */
 V.exchange=`
- <div class="ey">Unity Exchange · demand</div>
+ <div class="ey">Appendix · Unity Exchange</div>
  <div class="lead">Unity Exchange</div>
  <div class="sublead">The programmatic demand behind your impressions: new buyers, better identity, measurement and consent. Each one means another bid on the same impression.</div>
  ${takeaway('18 new DSPs joined in the first half of 2026, and durable identity is now live across the exchange. Your players are concentrated in the US and Europe, which is exactly where identity, consent and brand demand pay the most.')}
@@ -1506,8 +1538,8 @@ V.exchange=`
 
 /* ---------- Growth: Unity Ads for your UA team ---------- */
 V.growth=`
- <div class="ey">Growth · for your UA team</div>
- <div class="lead">Growing the player base</div>
+ <div class="ey">Appendix · for your UA team</div>
+ <div class="lead">Every new player is worth more than in Q2</div>
  <div class="sublead">Each player is earning more than at any point this year, so every new player is worth more. If UA is on the Q4 plan for Jurassic World: The Game, here's what Unity Ads can do on the buying side.</div>
  ${takeaway(`Jurassic World: The Game went from ${k0(dJW.jul.dau)} to ${k0(dJW.sep.dau)} daily players between July and September. As a follow-up to our GDC meeting with your UA team, here's what's live on the advertiser side of Unity Ads and what's coming.`)}
  ${sec('Why now','star','s')}
@@ -1555,7 +1587,7 @@ const VECTOR_BLOCK=`
 /* ---------- 07 plan ---------- */
 function priorities(){
  var P=[
- ['01','Keep the recovery, grow Jurassic World: The Game',[['Objective','Ship LevelPlay SDK 9.6.0 and Unity Ads adapter 5.9.0, JW: The Game first, and align on the Q4 UA plan for the title.'],['Expected impact','Fewer sessions without ads, fewer ANRs, and more value from every new player.'],['Owner','Ludia engineering + Unity'],['Timing','Q4'],['First action','Pick an engineering slot and date, and we confirm the iOS 15 question.'],['Success metric','Impressions per DAU stays at September levels after the update, and DAU stops falling.']]],
+ ['01','Keep the recovery, grow Jurassic World: The Game',[['Objective','Ship LevelPlay 9.6.0, Unity Ads adapter 5.9.0 and Unity Ads SDK 4.20.1, JW: The Game first, then Family Feud and Titan Uprising, and align on the Q4 UA plan for the title.'],['Expected impact','Fewer sessions without ads, fewer ANRs, and more value from every new player.'],['Owner','Ludia engineering + Unity'],['Timing','Q4'],['First action','Pick an engineering slot and date, and we confirm the iOS 15 question.'],['Success metric','Impressions per DAU stays at September levels after the update, and DAU stops falling.']]],
  ['02','Interstitials: from one title to two',[['Objective','Read the Ninja Turtles test, then run a simpler two-version test (two caps or pacing settings) on Jurassic World: The Game.'],['Expected impact','A second ad format on your largest title, paced so retention holds.'],['Owner','Ludia monetization + Unity'],['Timing','October to December'],['First action','Agree when and how to read the Ninja Turtles results.'],['Success metric','A clear revenue and retention read on Ninja Turtles, and a live test on JW: The Game by December.']]],
  ['03','More offerwall visitors',[['Objective','A sale with an in-game email every weekend, 3x for Christmas and New Year, and M2E on Jurassic World: The Game.'],['Expected impact','Your best weeks are sale weeks with a message behind them, so let\'s make that the norm.'],['Owner','Ludia live ops + Unity'],['Timing','From October'],['First action','Share the Q4 sale calendar, and we\'ll set up the multipliers and M2E.'],['Success metric','A message behind every sale, and M2E live on four titles.']]],
  ];
@@ -1587,11 +1619,12 @@ V.plan=`
  <div class="grid g2">
   <div class="card" style="padding:12px 30px">${nlist([
    ['Targets.','Your ad revenue targets for Q4 and 2027, and which titles carry them?'],['Players.','What is behind the Jurassic World: The Game DAU trend, and is UA planned for Q4?'],
-   ['Engineering.','When does your Q1 roadmap lock, and when would an SDK update need to be in to make it?'],
+   ['Planning.','When do your Q1 budget and roadmap lock, and when would an SDK update need to be in to make it?'],
+   ['Partners.','Which ad partners are gaining share with you right now, and why?'],
    ['Segmentation.','What would you segment on first if it were easy: payers, level, country?'],
    ['New titles.','Anything launching or soft-launching we should plan monetization for?'],
   ])}</div>
-  <div class="card" style="padding:12px 30px">${nlist([['How are we doing.','What\'s working well, and what\'s one thing we could do better next quarter?'],['Data access.','Is LevelPlay reporting enough for your team, or would an API or raw export save time?'],['Who else should join.','Anyone from live ops, product or finance we should invite next time?']])}
+  <div class="card" style="padding:12px 30px">${nlist([['How are we doing.','What\'s working well, and what\'s one thing we could do better next quarter?'],['Data and AI.','Is LevelPlay reporting enough for your team, and what would you like from ad tech partners on AI and agent workflows?'],['Who else should join.','Anyone from live ops, product or finance we should invite next time?']])}
   <div class="reco" style="margin-top:10px"><b>We'll send a recap within 24 hours.</b></div></div>
  </div>
  <div class="foot">October 2026 · Alon Haliva<br>Sources and method are in the appendix. Figures are rounded.</div>`;
@@ -1612,7 +1645,7 @@ V.summary=`
    ${kpi('Daily players',k0(DS.dau),pct(dauDrop)+' July to September','users')}
   </div>
   <div class="grid g2" style="margin-top:22px">
-   <div>${lab('What we\'d like to agree')}<p class="prose">Ship LevelPlay 9.6.0 with Unity Ads adapter 5.9.0 on Jurassic World: The Game in Q4. Share the Q4 UA plan for that title. Read the Ninja Turtles interstitial test and pick the second title. Run a sale with an in-game email every weekend.</p></div>
+   <div>${lab('What we\'d like to agree')}<p class="prose">Ship LevelPlay 9.6.0, Unity Ads adapter 5.9.0 and Unity Ads SDK 4.20.1 on Jurassic World: The Game in Q4, then Family Feud and Titan Uprising. Share the Q4 UA plan for that title. Read the Ninja Turtles interstitial test and pick the second title. Run a sale with an in-game email every weekend.</p></div>
    <div>${lab('What happens next')}<p class="prose"><b>Ludia:</b> an engineering date, the test read date, the Q4 sale calendar. <b>Unity:</b> the iOS 15 answer, Unity Ads share of the auction by title, Ad Quality on Ninja Turtles.</p></div>
   </div>
  </div>
@@ -1648,7 +1681,7 @@ const pad=n=>(n<10?'0':'')+n;
 (function(){
  var h='<div class="rl-grp"><button class="rl rl-home" data-id="welcome"><span class="rl-n">00</span><span class="rl-lbl">Welcome</span></button><button class="rl rl-home" data-id="agenda"><span class="rl-n"></span><span class="rl-lbl">Agenda</span></button></div>';
  var lastG=null;
- AGENDA.forEach(function(a,i){ if(a.g!==lastG){ h+='<div class="rl-ghead" data-id="div:'+a.g+'">'+a.g+'</div>'; lastG=a.g; } var mainN=AGENDA.filter(function(x){return x.g!=='Appendix';}).length; h+='<button class="rl" data-id="'+a.id+'"><span class="rl-n">'+(a.g==='Appendix'?'A'+(i-mainN+1):pad(i+1))+'</span><span class="rl-lbl">'+a.t.replace('Appendix · ','')+'</span></button>'; });
+ AGENDA.forEach(function(a,i){ if(a.g!==lastG){ h+='<div class="rl-ghead" data-id="div:'+a.g+'">'+a.g+'</div>'; lastG=a.g; } var mainN=AGENDA.filter(function(x){return x.g!=='Appendix';}).length; h+='<button class="rl" data-id="'+a.id+'"><span class="rl-n">'+(a.g==='Appendix'?'A'+(i-mainN+1):pad(i+1))+'</span><span class="rl-lbl">'+(a.r||a.t).replace('Appendix · ','')+'</span></button>'; });
  railEl.innerHTML=h;
 })();
 let cur='welcome';
@@ -1657,7 +1690,7 @@ function updProg(){ var h=document.documentElement.scrollHeight-window.innerHeig
 window.addEventListener('scroll',updProg,{passive:true});
 window.addEventListener('scroll',tocSpy,{passive:true});
 window.addEventListener('resize',updProg);
-function nameOf(id){ if(id==='welcome') return 'Welcome'; if(id==='agenda') return 'Agenda'; if(id&&id.indexOf('div:')===0) return id.slice(4); var a=AGENDA.find(function(x){return x.id===id;}); return a?a.t:''; }
+function nameOf(id){ if(id==='welcome') return 'Welcome'; if(id==='agenda') return 'Agenda'; if(id&&id.indexOf('div:')===0) return id.slice(4); var a=AGENDA.find(function(x){return x.id===id;}); return a?(a.r||a.t):''; }
 function updNav(){
  var i=ORDER.indexOf(cur);
  var pv=document.getElementById('pgprev'), nx=document.getElementById('pgnext'), pos=document.getElementById('pgpos');
