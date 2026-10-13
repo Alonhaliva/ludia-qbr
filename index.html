@@ -1436,6 +1436,15 @@ V.lp_road=`
   <div class="lp-note"><span class="lp-badge ea">Live · Early access</span><h4>Ad UX control</h4><p>A lighter ad experience just for your most ad-sensitive players, measured with A/B. A good fit as interstitials move from Ninja Turtles to Jurassic World: The Game.</p></div>
   <div class="lp-note"><span class="lp-badge ea">Q3 · Early access</span><h4>Smart segmentation</h4><p>Player segments built for you with machine learning, for pacing and gating. It can help separate payers from non-payers, for both interstitials and the offerwall.</p></div>
  </div>
+ ${sec('Floors you can set up today','gauge','s')}
+ <div class="grid g2">
+  <div class="card" style="padding:12px 30px">${nlist([
+   ['Setup.',`Start with the ${'<a href="https://docs.unity.com/en-us/grow/levelplay/platform/get-started/ad-units" target="_blank" rel="noopener" style="color:var(--demandInk);font-weight:700;text-decoration:underline;text-underline-offset:2px">platform configuration guide</a>'}. Your dev team already knows the integration side (${'<a href="https://docs.unity.com/en-us/grow/levelplay/sdk/unity/rewarded-ad-integration-package" target="_blank" rel="noopener" style="color:var(--demandInk);font-weight:700;text-decoration:underline;text-underline-offset:2px">ad objects and ad units</a>'}).`],
+   ['Our recommendation.','Three ad units per ad format, for high-floor, medium-floor and no-floor calls to the mediation layer.'],
+   ['Floors.',`Set them as fixed values in the dashboard, or change them on the fly through ${'<a href="https://docs.unity.com/en-us/grow/levelplay/sdk/unity/advanced-settings#price-floor-configuration" target="_blank" rel="noopener" style="color:var(--demandInk);font-weight:700;text-decoration:underline;text-underline-offset:2px">our API</a>'}.`],
+  ])}</div>
+  <div class="callbox"><h4>Where we'd start</h4><p>Jurassic World Alive and Titan Uprising, as part of the floors review in the Q4 plan. We'll suggest the starting floors for each ad unit and read the results with you.</p><p style="margin-bottom:0"><b>Coming later in Q4:</b> our own dynamic floor service, which sets a unique floor for every auction.</p></div>
+ </div>
  ${sec('The roadmap, by timing','chart','s')}
  <div class="roadmap" style="grid-template-columns:repeat(3,1fr)">
   <div class="rq"><h4>Live</h4>
