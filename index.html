@@ -1366,7 +1366,7 @@ function stackArea(labels, series, opts={}){
 V.unity=`
  <div class="ey">Unity Ads · a bidder in your LevelPlay auction</div>
  <div class="lead">Unity Ads grew 27% since the move to the Bold SDK</div>
- <div class="sublead">Unity Ads competes for your impressions inside LevelPlay. This year you moved from SDK 4.10 and 4.12 to our Bold SDK (4.16), then added 4.18. The price Unity Ads pays has climbed since, and 4.18 added reach.</div>
+ <div class="sublead">Unity Ads competes for your impressions inside LevelPlay. This year you moved from SDK 4.10 and 4.12 to our Bold SDK (4.16), then added 4.18 on July 7. The price Unity Ads pays has climbed since, and 4.18 added reach.</div>
  ${takeaway(`Unity Ads revenue grew ${pct(uChg).replace('+','')} in Q3 to ${money(UQ3.rev)}, with ${pct(uImpChg).replace('+','')} more impressions and a ${pct(uEcpmChg).replace('+','')} higher eCPM, while your overall LevelPlay revenue held flat. Unity Ads is now about ${Math.round(uShareQ3*100)}% of your ad revenue, up from about ${Math.round(uShareQ2*100)}% in Q2. On the Bold SDK 4.16.6 alone, eCPM went from ${usd(s4166.pecpm)} to ${usd(s4166.ecpm)}.`)}
  <div class="dstat-grid">
   ${dstat('Unity Ads revenue, Q3',money(UQ3.rev),uChg,`Q2 ${money(UQ3.prev)} · year to date ${money(U.ytd.rev)}`,true)}
@@ -1383,8 +1383,8 @@ V.unity=`
     {name:'Older SDKs (4.10 to 4.15)',v:wk.map(w=>sum(w,v=>/^4\.(1[0-5]|[0-9])\./.test(v))),c:C.amber},
     {name:'Bold SDK 4.16',v:wk.map(w=>sum(w,v=>/^4\.16\./.test(v))),c:C.demand},
     {name:'4.18',v:wk.map(w=>sum(w,v=>/^4\.1[789]\./.test(v)||/^4\.2/.test(v))),c:'#0F4F38'}],
-    {fmt:v=>money(v),h:300,marks:[{i:i416,t:'Bold SDK 4.16'},{i:i418,t:'4.18 added'}]});})()}
-  <div class="cap">In January and February, on 4.10 and 4.12, Unity Ads earned about ${money(U.janfeb.perWk)} a week. You moved to the Bold SDK (4.16) in March, and from May the price on it climbed steadily. 4.18 came in July. Some traffic moved over from 4.16 and some was new, and weekly impressions ran about a fifth above June through August. Q3 averaged ${money(UQ3.rev/13)} a week, up ${pct(uChg).replace('+','')} on Q2. Older versions are now only about ${Math.round(UQ3.legacy/UQ3.rev*100)}% of Unity Ads revenue.</div>
+    {fmt:v=>money(v),h:300,marks:[{i:i416,t:'Bold SDK 4.16'},{i:i418,t:'4.18 from Jul 7'}]});})()}
+  <div class="cap">In January and February, on 4.10 and 4.12, Unity Ads earned about ${money(U.janfeb.perWk)} a week. You moved to the Bold SDK (4.16) in March, and from May the price on it climbed steadily. 4.18 rolled out from July 7 and was at full volume within a week. Some traffic moved over from 4.16 and some was new, and weekly impressions ran about a fifth above June through August. Q3 averaged ${money(UQ3.rev/13)} a week, up ${pct(uChg).replace('+','')} on Q2. Older versions are now only about ${Math.round(UQ3.legacy/UQ3.rev*100)}% of Unity Ads revenue.</div>
  </div>
  <div class="grid g2" style="margin-top:18px">
   <div class="card">
@@ -1402,14 +1402,14 @@ V.unity=`
  <div class="card" style="padding:10px 0;overflow-x:auto">
   ${(()=>{const rows=U.q3sdk.filter(o=>o.rev>0), bold=rows.filter(o=>!/^4\.(1[0-5]|[0-9])\./.test(o.v)), old=rows.filter(o=>/^4\.(1[0-5]|[0-9])\./.test(o.v));
    const sum=(l,k)=>l.reduce((t,o)=>t+o[k],0), sh=v=>Math.round(v/UQ3.rev*100)+'%';
-   const trend=o=>/^4\.(1[0-5]|[0-9])\./.test(o.v)?'<span style="color:var(--muted)">moving to 4.20.1</span>':o.v==='4.18.1'?'<span style="color:var(--muted)">new · $5 to $7 every week</span>':o.pimp>1000?`${usd(o.pecpm)} → <b>${usd(o.ecpm)}</b> <span style="color:${o.ecpm>=o.pecpm?'var(--demand)':'var(--muted)'};font-weight:700">${pct(o.ecpm/o.pecpm-1)}</span>`:'–';
+   const trend=o=>/^4\.(1[0-5]|[0-9])\./.test(o.v)?'<span style="color:var(--muted)">moving to 4.20.1</span>':o.v==='4.18.1'?'<span style="color:var(--muted)">live Jul 7 · $5 to $7 every week</span>':o.pimp>1000?`${usd(o.pecpm)} → <b>${usd(o.ecpm)}</b> <span style="color:${o.ecpm>=o.pecpm?'var(--demand)':'var(--muted)'};font-weight:700">${pct(o.ecpm/o.pecpm-1)}</span>`:'–';
    const row=o=>`<tr><td class="lead2" style="padding-left:44px"><span class="sdk-chip ${/^4\.(1[0-5]|[0-9])\./.test(o.v)?'old':'cur'}">${o.v}</span></td><td class="n">${money(o.rev)}</td><td class="n">${sh(o.rev)}</td><td class="n" style="color:var(--muted)">${o.prev>100?money(o.prev):'new'}</td><td class="n" style="padding-right:30px">${trend(o)}</td></tr>`;
    const grp=(name,l)=>`<tr style="background:var(--bg2,#F3F6F4)"><td class="lead2" style="padding-left:30px;font-weight:800">${name}</td><td class="n" style="font-weight:800">${money(sum(l,'rev'))}</td><td class="n" style="font-weight:800">${sh(sum(l,'rev'))}</td><td class="n" style="font-weight:800;color:var(--muted)">${money(sum(l,'prev'))}</td><td style="padding-right:30px"></td></tr>`;
    return `<table class="t" style="min-width:640px"><thead><tr><th style="padding-left:30px">SDK version</th><th style="text-align:right">Q3 revenue</th><th style="text-align:right">Share of Q3</th><th style="text-align:right">Q2 revenue</th><th style="text-align:right;padding-right:30px">eCPM on this version, Q2 → Q3</th></tr></thead><tbody>
    ${grp('Bold SDK (4.16 and 4.18)',bold)}${bold.map(row).join('')}${grp('Older versions (4.10 and 4.12)',old)}${old.map(row).join('')}
    <tr style="background:var(--demandSoft)"><td class="lead2" style="padding-left:30px;font-weight:800">Total Unity Ads</td><td class="n" style="font-weight:800">${money(UQ3.rev)}</td><td class="n" style="font-weight:800">100%</td><td class="n" style="font-weight:800">${money(UQ3.prev)}</td><td class="n" style="font-weight:800;padding-right:30px">${usd(UQ3.pecpm)} → ${usd(UQ3.ecpm)} <span style="color:var(--demand)">${pct(uEcpmChg)}</span></td></tr>
    </tbody></table>`;})()}
-  <div class="cap" style="padding:8px 30px 4px">Jul 1 to Sep 30 vs Apr 1 to Jun 30. The total includes a few small versions not listed. <b>How to read it:</b> each version runs on a different mix of titles, platforms and ad formats, so compare a version with itself over time, not with another version. 4.18.1 has earned between $5 and $7 per thousand impressions every week since it launched, so its lower eCPM reflects the traffic it carries, not the SDK. What 4.18 added was reach: ${M(s4181.imp)} impressions in Q3. The small amount still on 4.10.0 earns a very high eCPM, so we'll check which title it is before it moves.</div>
+  <div class="cap" style="padding:8px 30px 4px">Jul 1 to Sep 30 vs Apr 1 to Jun 30. The total includes a few small versions not listed. <b>How to read it:</b> each version runs on a different mix of titles, platforms and ad formats, so compare a version with itself over time, not with another version. 4.18.1 has earned between $5 and $7 per thousand impressions every week since it went live on July 7, so its lower eCPM reflects the traffic it carries, not the SDK. What 4.18 added was reach: ${M(s4181.imp)} impressions in Q3. The small amount still on 4.10.0 earns a very high eCPM, so we'll check which title it is before it moves.</div>
  </div>
  ${sec('Next: SDK 4.20.1 everywhere','star','s')}
  <div class="grid g2">
