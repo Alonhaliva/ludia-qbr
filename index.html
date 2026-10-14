@@ -1485,11 +1485,18 @@ V.lp_road=`
   <div class="callbox"><h4>Where we'd start</h4><p>Jurassic World Alive and Titan Uprising, as part of the floors review in the Q4 plan. We'll suggest the starting floors for each ad unit and read the results with you.</p><p style="margin-bottom:0"><b>Coming later in Q4:</b> our own dynamic floor service, which sets a unique floor for every auction.</p></div>
  </div>
  <div class="note-row" style="margin-top:10px">Two rules of thumb: add floors when daily players hold steady but engagement drops, and keep waterfall lines at higher price points.</div>
- ${sec('Worth checking: one more bidder','users','s')}
- <div class="lp-notes" style="grid-template-columns:repeat(4,1fr)">
-  ${[['Moloco','All markets','Puzzle, hyper-casual, simulation'],['Pangle','New to the US','Match-3, hyper-casual, simulation'],['HyprMX','All markets, stronger on iOS','Casino, puzzle, simulation'],['InMobi','All markets, stronger on Android','Puzzle, hyper-casual, sports']].map(n=>`<div class="lp-note"><span class="lp-badge live">Bidding</span><h4>${n[0]}</h4><p>${n[1]}. Top genres: ${n[2]}.</p></div>`).join('')}
+ ${sec('Worth testing: one more bidder','users','s')}
+ <div class="grid g2">
+  <div class="card" style="padding:12px 30px">
+   ${lab('Your stack today, Jurassic World: The Game iOS rewarded')}
+   <p class="prose" style="margin:6px 0 10px">Seven bidders already compete for each impression: Unity Ads, Moloco, Liftoff, DT Exchange, Meta, Google and ironSource, with AppLovin and Google Ad Manager as waterfall lines. Unity Ads is the top bidder, with 38% of revenue at a $15.70 eCPM.</p>
+   <div class="cap" style="margin:0">From your LevelPlay mediation view, COPPA False group, Oct 13. Other titles, platforms and ad units can differ, so we'll check each before suggesting anything.</div>
+  </div>
+  <div class="callbox"><h4>Our suggestion: test one more bidder</h4><p>More bidders means more competition for every impression. We'd add one at a time and measure it with LevelPlay A/B:</p>${nlist([
+   ['HyprMX on iOS.','Stronger on iOS, with simulation among its top genres.'],
+   ['Pangle or InMobi on Android.','Pangle is new to the US with simulation among its top genres. InMobi is stronger on Android.'],
+  ])}<p style="margin-bottom:0">Adding a competitive bidder has lifted revenue by up to 10% at similar publishers*. *Seen elsewhere, not a Ludia result.</p></div>
  </div>
- <div class="note-row">All four bid on rewarded, interstitial and banner. Adding one more competitive bidder has lifted revenue by up to 10% at similar publishers*, and several are strongest in simulation, your genre. We'll check which are already in your stack. *Seen elsewhere, not a Ludia result.</div>
  ${sec('The roadmap, by timing','chart','s')}
  <div class="roadmap" style="grid-template-columns:repeat(3,1fr)">
   <div class="rq"><h4>Live</h4>
