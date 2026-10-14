@@ -1501,6 +1501,7 @@ V.lp_road=`
  <div class="roadmap" style="grid-template-columns:repeat(3,1fr)">
   <div class="rq"><h4>Live</h4>
    ${rItem('Dynamic Loading on rewarded video','Ads load in parallel instead of one at a time, and load times are down about 70%. Live since Sep 3 on SDK 9.0+, nothing to set up.','LIVE','live')}
+   ${rItem('AI-assisted integration','The Unity AI Assistant sets up LevelPlay from install to a live ad. There\'s also the LevelPlay Unity Integration Skill (beta) for Claude Code and other coding agents.','LIVE','live')}
    ${rItem('SDK 9.6.0 and refactored adapters','Init retry, single boolean GDPR consent, split impression-level revenue APIs, Swift Package Manager, AdMob Next Gen support.','LIVE','live')}
    ${rItem('Bidding-first demand stack','PubMatic and Voodoo now bid, with LINE and YSO ramping up. Older non-bidding instances retire through 2026.','ROLLING','live')}
    ${rItem('Show recovery and Rewards API','A backup ad when the first one fails to show, and the reward value and type before the ad loads (from 9.3.0).','LIVE','live')}
@@ -1511,7 +1512,6 @@ V.lp_road=`
    ${rItem('Smart segmentation','ML-driven segments for pacing and gating.','Q3 · EA','alpha')}
   </div>
   <div class="rq"><h4>Coming</h4>
-   ${rItem('AI-assisted integration','The Unity AI Assistant will set up LevelPlay from install to a live ad. The LevelPlay Unity Integration Skill (beta) for coding agents is already available.','Q4','')}
    ${rItem('Unified dashboard','LevelPlay, Ad Quality, Offerwall and Unity Ads in one monetization dashboard.','Q4','')}
    ${rItem('Mediation agentic flow','AI-assisted, versioned changes to your mediation setup. Check, preview and apply, with the impact on your KPIs tracked.','COMING','')}
    ${rItem('Ad content control','Block bundles and creatives across bidding networks from LevelPlay, with Ad Quality reporting.','EARLY 2027','')}
@@ -1519,10 +1519,10 @@ V.lp_road=`
   </div>
  </div>
  <div class="note-row">LevelPlay and Ad Quality data make Vector smarter, and Vector powers the smart features inside LevelPlay. Roadmap items reflect current plans, not commitments.</div>
- ${sec('Coming in Q4: AI-assisted integration','eye','s')}
+ ${sec('See it in action: AI-assisted integration','eye','s')}
  <div class="grid g2" style="align-items:start">
   <div class="ai-vid"><video class="ai-vid-el" src="assets/levelplay_assistant.mp4" poster="assets/levelplay_poster.jpg" preload="metadata" playsinline controls></video><button class="ai-vid-play" type="button" aria-label="Play" onclick="var v=this.previousElementSibling; v.play(); this.parentNode.classList.add('playing');">&#9654;</button></div>
-  <div class="callbox"><h4>Where we'd love to work more closely</h4><p><b>Early access.</b> Dynamic bid floors on Jurassic World Alive, and Ad UX control alongside the interstitial test. We'll set them up and review the results with you.</p><p><b>Your input.</b> Your team has been clear about segmentation and A/B significance. Both are on the product roadmap, and your feedback helps shape them.</p><p style="margin-bottom:0"><b>For new and existing titles.</b> From Q4, on a new game, the AI Assistant will set up LevelPlay in plain language, from "I want ads in my game" to a working integration, as in the preview. On the titles you already run, the LevelPlay Unity Integration Skill (beta) guides Claude and other coding agents through the SDK upgrade and the move to the Ad Unit APIs. That can speed up the move off 8.4.0 on Family Feud and Titan Uprising, and the 9.6 update everywhere else.</p></div>
+  <div class="callbox"><h4>Where we'd love to work more closely</h4><p><b>Early access.</b> Dynamic bid floors on Jurassic World Alive, and Ad UX control alongside the interstitial test. We'll set them up and review the results with you.</p><p><b>Your input.</b> Your team has been clear about segmentation and A/B significance. Both are on the product roadmap, and your feedback helps shape them.</p><p style="margin-bottom:0"><b>For new and existing titles.</b> On a new game, the AI Assistant sets up LevelPlay in plain language, from "I want ads in my game" to a working integration. On the titles you already run, the LevelPlay Unity Integration Skill (beta) guides Claude and other coding agents through the SDK upgrade and the move to the Ad Unit APIs. That can speed up the move off 8.4.0 on Family Feud and Titan Uprising, and the 9.6 update everywhere else.</p></div>
  </div>`;
 
 /* ---------- Unity Exchange ---------- */
