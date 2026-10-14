@@ -1277,16 +1277,16 @@ V.offerwall=`
   <div class="card">${lab('M2E offerwall visitors per week')}${vbars(M2E.weekly_duv.map(w=>dlab(w[0])),[{name:'Daily visitors, summed',v:M2E.weekly_duv.map(w=>w[1]),c:C.demand}],{fmt:v=>(v/1000).toFixed(0)+'k',sub:M2E.weekly_duv.map((w,i)=>i===0?'from Jun 11':i===M2E.weekly_duv.length-1?'to Jul 30':'')})}<div class="cap">Visitors climbed through July, from about 25K a week in late June to 37K by late July.</div></div>
  </div>
  <div class="card" style="margin-top:18px;padding:22px 30px">
-  ${lab('Where the revenue comes from, US')}
+  ${lab('Where the revenue comes from, US, Aug 15 to Oct 13')}
   <div class="grid g2" style="gap:14px;margin-top:8px">
-   ${[['rob','Dragons: Rise of Berk',4185,2517,1668],['jwa','Jurassic World Alive',2708,1239,1469]].map(x=>`<div style="border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--surface)">
+   ${[['rob','Dragons: Rise of Berk',5042,2804,2238],['jwa','Jurassic World Alive',2650,576,2074]].map(x=>`<div style="border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--surface)">
     <div style="display:flex;align-items:center;gap:8px;font-weight:800;color:var(--ink)">${gimg(x[0],24)}${x[1]}</div>
     <div style="font-size:30px;font-weight:850;color:var(--ink);margin:8px 0 2px">${moneyFull(x[2])}</div>
     <div style="font-size:12px;color:var(--muted);margin-bottom:10px">M2E offerwall revenue to Ludia, US</div>
     <div style="display:flex;height:12px;border-radius:6px;overflow:hidden" data-tip="Android ${moneyFull(x[3])} · iOS ${moneyFull(x[4])}"><div style="width:${x[3]/x[2]*100}%;background:${C.amber}"></div><div style="flex:1;background:${C.demand}"></div></div>
     <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:6px;color:var(--body)"><span><b>Android</b> ${moneyFull(x[3])}</span><span><b>iOS</b> ${moneyFull(x[4])}</span></div></div>`).join('')}
   </div>
-  <div class="cap" style="margin-top:10px">US only, Jul 2 to Aug 31, 2026. This is a separate US view with its own dates, so it does not add up to the all-market totals above.</div>
+  <div class="cap" style="margin-top:10px">US only, Aug 15 to Oct 13, 2026: M2E offerwall revenue to Ludia of $7,692 across these two titles, about $128 a day. This is the most recent M2E view we have, and it shows M2E still earning steadily into October. It is a separate US view with its own dates, so it does not add up to the all-market totals above.</div>
  </div>
  <div class="card" style="padding:10px 0;overflow-x:auto;margin-top:18px">
   ${'<div style="padding:8px 30px 4px">'+lab('Who the M2E players are')+'</div>'}
