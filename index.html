@@ -789,6 +789,31 @@ body.onpage-on .pagenav{right:0}
 .sa-tot{border-top:1px solid rgba(255,255,255,.18);margin-top:5px;padding-top:7px;opacity:1}
 .sa-tot b{font-weight:800}
 
+/* benchmark range bars */
+.bm-key{display:flex;flex-wrap:wrap;gap:18px;font-size:12px;color:var(--muted);margin:2px 0 14px}
+.bm-key span{display:flex;align-items:center;gap:7px}
+.bm-key i{display:inline-block}
+.k-dot{width:11px;height:11px;border-radius:50%;background:var(--demand);box-shadow:0 0 0 2px #fff,0 0 0 3px var(--demand)}
+.k-band{width:22px;height:10px;border-radius:5px;background:#DCEFE6}
+.k-med{width:2px;height:14px;background:#0F4F38}
+.bm-row{display:grid;grid-template-columns:230px 1fr 170px;gap:18px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}
+.bm-name{display:flex;align-items:center;gap:10px;min-width:0}
+.bm-name div{display:flex;flex-direction:column;min-width:0}
+.bm-name b{font-size:13.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bm-name span{font-size:11.5px;color:var(--muted)}
+.bm-track{position:relative;height:30px;border-radius:15px;background:#F1F4F2}
+.bm-band{position:absolute;top:5px;bottom:5px;border-radius:10px;background:#DCEFE6;transform-origin:left;animation:bmGrow .9s cubic-bezier(.2,.7,.2,1) both}
+.bm-med{position:absolute;top:2px;bottom:2px;width:2px;margin-left:-1px;background:#0F4F38;border-radius:1px}
+.bm-dot{position:absolute;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:var(--demand);box-shadow:0 0 0 3px #fff,0 2px 8px rgba(0,0,0,.25);animation:bmDot .9s cubic-bezier(.2,.7,.2,1) both .2s}
+.bm-dot em{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-style:normal;font-size:11.5px;font-weight:800;color:var(--ink);white-space:nowrap}
+.bm-gap{font-size:12.5px;color:var(--body);text-align:right}
+.bm-gap b{color:var(--demandInk,#0F4F38);font-size:15px}
+.bm-axis{position:relative;height:18px;margin:4px 0 6px calc(230px + 18px);width:calc(100% - 230px - 170px - 36px);font-size:11px;color:var(--faint)}
+.bm-axis span{position:absolute;transform:translateX(-50%)}
+@keyframes bmGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes bmDot{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+@media (max-width:760px){.bm-row{grid-template-columns:1fr;gap:8px}.bm-gap{text-align:left}.bm-axis{display:none}}
+
 </style>
 </head>
 <body>
@@ -1115,17 +1140,35 @@ V.lp_perf=`
   <table class="t" style="min-width:720px"><thead><tr><th style="padding-left:30px">Title</th><th style="text-align:right">Q3 revenue</th><th style="text-align:right">ARPDAU</th><th style="text-align:right">DAU, Jul → Sep</th><th style="text-align:right">Change</th><th style="text-align:right">Imp/DAU, Jul → Sep</th><th style="text-align:right;padding-right:30px">Change</th></tr></thead><tbody>${dRows}</tbody></table>
   <div class="cap" style="padding:8px 30px 4px">LevelPlay performance dashboard, both platforms combined (split in the appendix). Q3 revenue and ARPDAU exclude Jul 10 and 15. DC Heroes & Villains wound down in June.</div>
  </div>
- ${sec('How you compare: ads per player','users','s')}
- <div class="card" style="padding:10px 0;overflow-x:auto">
-  <table class="t" style="min-width:640px"><thead><tr><th style="padding-left:30px">Title</th><th>Category</th><th style="text-align:right">Your impressions per DAU, Sep</th><th style="text-align:right">Category range, US</th><th style="text-align:right">Rest of world</th><th style="text-align:right;padding-right:30px">Where you sit</th></tr></thead><tbody>
-  ${(()=>{const CAT={'Jurassic World: The Game':'Casual','Dragons: Rise of Berk':'Casual','Jurassic World Alive':'Mid-core','Ninja Turtles: Legends':'Mid-core','Dragons: Titan Uprising':'Casual','Family Feud Live!':'Casual'};
-   const RNG={'Casual':{us:[1.6,2.8,5.5],row:[1.8,3.5,6.2]},'Mid-core':{us:[1.3,2.1,2.5],row:[1.6,2.2,2.6]}};
-   return DASH.titles.filter(t=>t.sep.imp>0&&CAT[t.key]).map(t=>{const c=CAT[t.key],r=RNG[c],v=t.sep.ipd;
-    const tag=v<r.us[0]?'<span class="tag-ask">below the range</span>':v<r.us[1]?'<span class="tag-live">lower half</span>':'<span class="tag-live">upper half</span>';
-    return `<tr><td class="lead2" style="padding-left:30px">${gimg(t.icon,20)}${t.name}</td><td style="color:var(--body)">${c}</td><td class="n" style="font-weight:800">${v.toFixed(2)}</td><td class="n">${r.us[0]} to ${r.us[2]}</td><td class="n">${r.row[0]} to ${r.row[2]}</td><td class="n" style="padding-right:30px">${tag}</td></tr>`;}).join('');})()}
-  </tbody></table>
-  <div class="cap" style="padding:8px 30px 4px">Ranges are the 25th to 75th percentile of Unity LevelPlay titles in each category, from our Q3 2026 review set. Your figures are worldwide, so read this as a guide. Jurassic World: The Game and Rise of Berk sit in the lower half of the casual range. Jurassic World Alive, Ninja Turtles, Family Feud and Titan Uprising show fewer ads per player than the low end of their category, which leaves room for well-placed rewarded ads, like the new placements your JWA team is planning.</div>
- </div>
+ ${sec('How you compare: your genre already shows more ads','users','s')}
+ ${(()=>{const CAT={'Jurassic World: The Game':'Casual','Dragons: Rise of Berk':'Casual','Jurassic World Alive':'Mid-core','Ninja Turtles: Legends':'Mid-core','Dragons: Titan Uprising':'Casual','Family Feud Live!':'Casual'};
+  const RNG={'Casual':{us:[1.6,2.8,5.5],row:[1.8,3.5,6.2]},'Mid-core':{us:[1.3,2.1,2.5],row:[1.6,2.2,2.6]}};
+  const rows=DASH.titles.filter(t=>t.sep.imp>0&&CAT[t.key]).map(t=>({t,c:CAT[t.key],r:RNG[CAT[t.key]],v:t.sep.ipd})).sort((x,y)=>(x.v/x.r.us[1])-(y.v/y.r.us[1]));
+  const MX=6.5,P=v=>Math.min(100,v/MX*100).toFixed(1);
+  const bar=o=>{const [lo,md,hi]=o.r.us,x=o.v/md;return `<div class="bm-row">
+   <div class="bm-name">${gimg(o.t.icon,20)}<div><b>${o.t.name}</b><span>${o.c}</span></div></div>
+   <div class="bm-track" data-tip="${o.t.name}: ${o.v.toFixed(2)} a day · ${o.c} titles: middle half ${lo} to ${hi}, typical ${md}">
+    <div class="bm-band" style="left:${P(lo)}%;width:${(P(hi)-P(lo)).toFixed(1)}%"></div>
+    <div class="bm-med" style="left:${P(md)}%"></div>
+    <div class="bm-dot" style="left:${P(o.v)}%"><em>${o.v.toFixed(2)}</em></div>
+   </div>
+   <div class="bm-gap">${x<1?`typical peer shows <b>${(1/x).toFixed(1)}×</b>`:'at or above typical'}</div></div>`;};
+  const cas=RNG.Casual.us, mid=RNG['Mid-core'].us;
+  return `<div class="card bm">
+   ${lab('Impressions per daily player, September: you vs titles in your category')}
+   <div class="bm-key"><span><i class="k-dot"></i>Your title</span><span><i class="k-band"></i>Middle half of the category (25th to 75th percentile)</span><span><i class="k-med"></i>Typical title (median)</span></div>
+   ${rows.map(bar).join('')}
+   <div class="bm-axis">${[0,1,2,3,4,5,6].map(v=>`<span style="left:${P(v)}%">${v}</span>`).join('')}</div>
+   <div class="cap">Category ranges are from Unity LevelPlay titles in our Q3 2026 review set, US. Your figures are worldwide, and rest-of-world ranges run a little higher (casual ${RNG.Casual.row[0]} to ${RNG.Casual.row[2]}, mid-core ${RNG['Mid-core'].row[0]} to ${RNG['Mid-core'].row[2]}), so read this as a guide.</div>
+  </div>
+  <div class="grid g2" style="margin-top:18px">
+   <div class="callbox"><h4>You wouldn't be the only one in your genre</h4><p>Every one of your titles shows fewer ads per player than the typical game in its category. The typical casual title shows ${cas[1]} a day, and a quarter show more than ${cas[2]}. The typical mid-core title shows ${mid[1]}, ${(mid[1]/rows.find(o=>o.t.key==='Jurassic World Alive').v).toFixed(1)} times what Jurassic World Alive shows.</p><p style="margin-bottom:0">So adding a few well-placed ads doesn't make your games the outlier. It brings them closer to what players in your genre already see every day.</p></div>
+   <div class="card" style="padding:12px 30px">${nlist([
+    ['Rewarded first.','Players choose to watch, so it is the safest way to add impressions. Your JWA team already has new placements planned.'],
+    ['One title at a time, with A/B.','LevelPlay A/B with day-7 retention and session length as the guardrails, not only revenue.'],
+    ['Protect your most sensitive players.','Ad UX control (early access) keeps a lighter ad experience for the players most likely to churn.'],
+   ])}</div>
+  </div>`;})()}
  ${sec('A question for you','star','s')}
  <div class="callbox"><h4>What's the plan for Jurassic World: The Game players in Q4?</h4><p>Each player is earning more than at any point this year, so every new player is worth more than in Q2. If a UA push is planned, we'd love to line it up with the 9.6.0 update and the interstitial test, and pick up the conversation we started with your UA team at GDC.</p><p style="margin-bottom:0">And if the drop comes from the game side, like a content gap, an event ending or older devices being dropped, knowing that helps us set the right floors and pacing.</p></div>`;
 
