@@ -1065,7 +1065,7 @@ V.overview=`
  <div class="opp-hero" style="margin-top:6px">
   <div class="tag">The ask · Q4</div>
   <h3>One SDK update this quarter: LevelPlay 9.6.0, Unity Ads adapter 5.9.0 and Unity Ads SDK 4.20.1, starting with Jurassic World: The Game</h3>
-  <p>It keeps the impression recovery in place with an init retry, brings Dynamic Loading to Family Feud and Titan Uprising, and moves the last 12% of Unity Ads traffic off older SDKs. On today's Unity Ads revenue, Unity's published ranges for the newer SDK (up to 10% more impression opportunities and up to 15% more revenue per impression) work out to roughly <b>${money(DATA.UADS.q3.rev*0.10)} to ${money(DATA.UADS.q3.rev*(1.10*1.15-1))} a quarter</b>, if they hold on your inventory. We'd plan on the low end.</p>
+  <p>It keeps the impression recovery in place with more resilient SDK initialization, brings Dynamic Loading to Family Feud and Titan Uprising, and moves the last 12% of Unity Ads traffic off older SDKs. On today's Unity Ads revenue, Unity's published ranges for the newer SDK (up to 10% more impression opportunities and up to 15% more revenue per impression) work out to roughly <b>${money(DATA.UADS.q3.rev*0.10)} to ${money(DATA.UADS.q3.rev*(1.10*1.15-1))} a quarter</b>, if they hold on your inventory. We'd plan on the low end.</p>
   <div class="opp-terms"><div class="opp-term"><b>Primary</b>The update on Jurassic World: The Game in Q4, then Family Feud and Titan Uprising</div><div class="opp-term"><b>Secondary</b>30 minutes with your UA lead on Jurassic World: The Game players</div><div class="opp-term"><b>What we need today</b>An engineering owner and a target date</div></div>
  </div>
 
@@ -1183,7 +1183,7 @@ V.lp_next=`
  <div class="ey">LevelPlay · mediation</div>
  <div class="lead">Ads load 80% faster, and one SDK update locks it in</div>
  <div class="sublead">Three things changed this quarter, and there's one update on your side we'd like to plan together.</div>
- ${takeaway(`Rewarded ads now load ${pct(latChg).replace('−','')} faster than in July. Next up is LevelPlay SDK 9.6.0 with Unity Ads adapter 5.9.0, which adds an init retry so fewer sessions start without ads.`)}
+ ${takeaway(`Rewarded ads now load ${pct(latChg).replace('−','')} faster than in July. Next up is LevelPlay SDK 9.6.0 with Unity Ads adapter 5.9.0, which improves SDK initialization for greater resilience under poor network conditions.`)}
  ${sec('Changed: faster rewarded loading','gauge','s')}
  <div class="grid g2">
   <div class="card">
@@ -1207,7 +1207,7 @@ V.lp_next=`
  ${sec('Next on your side: SDK 9.6.0 and adapter 5.9.0','chip','s')}
  <div class="grid g2">
   <div class="card" style="padding:12px 30px">${nlist([
-   ['Init retry.','If LevelPlay fails to initialize on launch it tries again, so fewer sessions end up with no ads at all.'],
+   ['More resilient initialization.','Improved the SDK initialization functionality for greater resilience under poor network conditions. Saved ~5% of inits and DAU.'],
    ['Fixes for impressions, ANRs and ad callbacks.','Bug fixes from across the 9.x line, plus adapter 5.9.0, the matching Unity Ads update.'],
    ['Versions and platform floor.','Latest is Android 9.6.0, iOS 9.6.1 and Unity plugin 9.5.1. The update needs iOS 15 or newer, and we will confirm what players on older devices see before you ship.'],
    ['Faster with an AI coding agent.','The public LevelPlay skill for Claude Code and other coding agents can help with the upgrade and the move from the older IronSource APIs to the Ad Unit APIs.'],
@@ -1554,16 +1554,17 @@ V.lp_road=`
  <div class="ey">LevelPlay · roadmap</div>
  <div class="lead">Dynamic bid floors, ad UX control and smart segmentation: what to try first</div>
  <div class="sublead">Where LevelPlay is heading, what you can turn on now, and what's coming in the next two quarters. A few of these answer questions your team raised this year.</div>
- ${takeaway('The roadmap has three areas of investment: Intelligent Management, Competitive Demand and Publisher Ad Controls. Ad UX control is in early access now, with Dynamic bid floors in closed beta and Smart segmentation in early access from Q4. All three fit right into your interstitial test and segmentation work.')}
+ ${takeaway('The roadmap has three areas of investment: Monetization Yield, Publisher Ad Controls and Intelligent Management. Ad UX control is in early access now, with Dynamic bid floors in closed beta and Smart segmentation in early access from Q4. All three fit right into your interstitial test and segmentation work.')}
  ${sec('Three areas of investment','star','s')}
  <div class="strip">
-  <div class="st"><div class="lbl">01</div><div class="val" style="font-size:20px">Intelligent Management</div><div class="note">Automation and AI for setup, optimization, decisioning. Less manual ops.</div></div>
-  <div class="st"><div class="lbl">02</div><div class="val" style="font-size:20px">Competitive Demand</div><div class="note">Smart Auction, network certification.</div></div>
-  <div class="st"><div class="lbl">03</div><div class="val" style="font-size:20px">Publisher Ad Controls</div><div class="note">Content blocking, UX controls, segment-level ad experience.</div></div>
+  <div class="st"><div class="lbl">01</div><div class="val" style="font-size:20px">Monetization Yield</div><div class="note">Dynamic bid floors, Vector improvements.</div></div>
+  <div class="st"><div class="lbl">02</div><div class="val" style="font-size:20px">Publisher Ad Controls</div><div class="note">Content blocking, UX controls, segment-level ad experience.</div></div>
+  <div class="st"><div class="lbl">03</div><div class="val" style="font-size:20px">Intelligent Management</div><div class="note">Automation and AI for setup, optimization, decisioning. Less manual ops.</div></div>
  </div>
+ <div class="note-row" style="margin-top:10px"><b>How we think about our flywheel.</b> Signal in: LevelPlay and Ad Quality data strengthen Vector and UA performance. ML out: Vector's ML powers more intelligent monetization features inside LevelPlay.</div>
  ${sec('Three to know for Ludia','chip','s')}
  <div class="lp-notes" style="grid-template-columns:repeat(3,1fr)">
-  <div class="lp-note"><span class="lp-badge ea">Q4 · Closed beta</span><h4>Dynamic bid floors</h4><p>Floors that adjust automatically to live auction conditions, pushing the auction to surface higher-value demand on every impression. We'd start with Jurassic World Alive and Titan Uprising.</p></div>
+  <div class="lp-note"><span class="lp-badge ea">Q4 · Closed beta</span><h4>Dynamic bid floors</h4><p>Maximum yield on every impression, removing dependency on external floors. Enable at a group level, supporting custom segments, and measure uplift using LevelPlay's A/B testing features. We'd start with Jurassic World Alive and Titan Uprising.</p></div>
   <div class="lp-note"><span class="lp-badge ea">Live · Early access</span><h4>Ad UX control</h4><p>A retention-optimized ad experience, applied only to the most ad-sensitive users. Measured via LevelPlay A/B (starting with Unity Ads only in the auction). A good fit as interstitials move from Ninja Turtles to Jurassic World: The Game.</p></div>
   <div class="lp-note"><span class="lp-badge ea">Q4 · Early access</span><h4>Smart segmentation</h4><p>Use in conjunction with our new ad UX controls, dynamically segment players based on predicted value and align the ad experience accordingly to maximise revenue and retention.</p></div>
  </div>
@@ -1574,7 +1575,7 @@ V.lp_road=`
    ['Our recommendation.','Three ad units per ad format, for high-floor, medium-floor and no-floor calls to the mediation layer.'],
    ['Floors.',`Set them as fixed values in the dashboard, or change them on the fly through ${'<a href="https://docs.unity.com/en-us/grow/levelplay/sdk/unity/advanced-settings#price-floor-configuration" target="_blank" rel="noopener" style="color:var(--demandInk);font-weight:700;text-decoration:underline;text-underline-offset:2px">our API</a>'}.`],
   ])}</div>
-  <div class="callbox"><h4>Where we'd start</h4><p>Jurassic World Alive and Titan Uprising, as part of the floors review in the Q4 plan. We'll suggest the starting floors for each ad unit and read the results with you.</p><p style="margin-bottom:0"><b>Coming later in Q4:</b> our own dynamic floor service, which sets a unique floor for every auction.</p></div>
+  <div class="callbox"><h4>Where we'd start</h4><p>Jurassic World Alive and Titan Uprising, as part of the floors review in the Q4 plan. We'll suggest the starting floors for each ad unit and read the results with you.</p><p><b>Coming later in Q4:</b> our own dynamic floor service, which sets a unique floor for every auction.</p><p style="margin-bottom:0"><b>Good to know:</b> in the closed beta it's turned on per mediation group, with a second ad unit as the fallback, and dynamic floors replace all floors in that group.</p></div>
  </div>
  <div class="note-row" style="margin-top:10px">Two rules of thumb: add floors when daily players hold steady but engagement drops, and keep waterfall lines at higher price points.</div>
  ${sec('Worth testing: one more bidder','users','s')}
@@ -1594,20 +1595,19 @@ V.lp_road=`
   <div class="rq"><h4>Live</h4>
    ${rItem('Dynamic Loading on rewarded video','Ads load in parallel instead of one at a time, and load times are down about 70%. Live since Sep 3 on SDK 9.0+, nothing to set up.','LIVE','live')}
    ${rItem('AI-assistance integration','Ask the Unity AI Assistant to monetize your game and it integrates LevelPlay for you - from package install to a live ad in one guided session. Also available as a public LevelPlay skill for Claude Code and other coding agents.','Q3 · LIVE','live')}
-   ${rItem('LevelPlay SDK 9.6.0 and network adapters','Privacy & GDPR simplified - single boolean consent replaces network-level mapping. Impression-level revenue API split into two dedicated APIs, one for publishers and one for MMPs. Swift Package Manager now official. All networks\' adapters refactored for reliability and performance, plus support for Google\'s Next Gen Ads SDK via AdMob adapter v5.10.0.','Q3 · LIVE','live')}
+   ${rItem('LevelPlay SDK 9.6 and network adapters','Improved the SDK initialization functionality for greater resilience under poor network conditions. Saved ~5% of inits and DAU. Improved reliability and overall performance by refactoring all networks\' adapters (Unity Ads, Mintegral, InMobi, Moloco, Applovin and more), plus new support for Google\'s Next Gen Ads SDK.','Q3 · LIVE','live')}
    ${rItem('A bidding-first demand stack','New bidders live: PubMatic, with LINE and YSO ramping. Legacy non-bidding instances are being retired - fewer wasted calls, lower latency, cleaner auctions.','ROLLING OUT THROUGH 2026','live')}
    ${rItem('Show recovery and Rewards API','A backup ad when the first one fails to show, and the reward value and type before the ad loads (from 9.3.0).','LIVE','live')}
   </div>
   <div class="rq"><h4>Early access and closed beta</h4>
-   ${rItem('Dynamic bid floors','Floors that adjust automatically to live auction conditions, pushing the auction to surface higher-value demand on every impression.','Q4 · CLOSED BETA','alpha')}
+   ${rItem('Dynamic bid floors','Maximum yield on every impression, removing dependency on external floors.','Q4 · CLOSED BETA','alpha')}
    ${rItem('Ad UX control','A retention-optimized ad experience, applied only to the most ad-sensitive users. Measured via LevelPlay A/B (starting with Unity Ads only in the auction).','LIVE · EARLY ACCESS','alpha')}
    ${rItem('Smart segmentation','Use in conjunction with our new ad UX controls, dynamically segment players based on predicted value and align the ad experience accordingly to maximise revenue and retention.','Q4 · EARLY ACCESS','alpha')}
   </div>
   <div class="rq"><h4>Coming</h4>
-   ${rItem('Unified Dashboard','LevelPlay is moving to Unity\'s new monetization dashboard - a single platform for accessing LevelPlay, Ad Quality, Offerwall, and Unity Ads.','ETA Q4','')}
-   ${rItem('Modular Ads SDK','LevelPlay, Unity Ads and Ad Quality packaged as modules of one Ads SDK - a single dependency. Each product keeps its role - only the packaging collapses. Moving over is one change: swap your app key for your Game ID.','ETA Q4','')}
+   ${rItem('Unified Dashboard','LevelPlay is moving to Unity\'s new monetization dashboard - a single platform for accessing LevelPlay, Ad Quality, Offerwall, and Unity Ads.','Q1 2027','')}
    ${rItem('Dynamic bid floors GA','General availability of Dynamic bid floors, after the closed beta.','COMING','')}
-   ${rItem('Ad content control','Block bundles and creatives across participating bidding networks from the LevelPlay platform. A/B test the blocking impact per segment. Ensure network compliance using Ad Quality reporting.','ETA Q4','')}
+   ${rItem('Ad content control','Block bundles and creatives across participating bidding networks from the LevelPlay platform. Ensure network compliance using Ad Quality reporting.','EARLY 2027','')}
    ${rItem('Mediation agentic flow','AI-assisted, versioned workflow that validates, previews, and safely applies mediation configuration changes with traceability and KPI impact analytics.','FUTURE','')}
   </div>
  </div>
